@@ -1,0 +1,856 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-next">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.1"/>
+
+
+
+
+	<meta name="keywords" content="IO," />
+
+  <title> IO基础 // 觉知此事要躬行 </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">觉知此事要躬行</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              IO基础
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-08-08
+          
+        </span>
+
+        
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <h3 id="什么是IO">什么是IO</h3><p>这个IO，是英文Input和Output的首字母缩写，也就是输入/输出。最早接触javaIO的时候会被各种输入输出流搞的头晕眼花。<br>一开始我总是把输入输出的主体当作硬盘，在看了一遍之后，发现了一个方便法门：</p>
+<blockquote>
+<p>输入/输出都是相对于内存来说的，所有读取到内存的都是Input流，反之则是Output流</p>
+</blockquote>
+<p>在这样想之后，输入输出流再也没有弄混过。不多说，先上一张全家福：<br><img src="http://xinjue.qiniudn.com/github/201408/javaio1.jpg" alt="javaIO操作类，感谢Xmind的支持"></p>
+<h3 id="操作文件的类—-File">操作文件的类—-File</h3><p>整个IO包中，唯一与文件本身相关的类就是File类，下面通过一个例子来说明File类的相关操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.File;  <span class="comment">// 注意，需要引入需要的包</span></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileDemo</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		File f1 = <span class="keyword">new</span> File(<span class="string">"d:\\test1.txt"</span>);	<span class="comment">// 这里的两个\\第一个是转义第二个的，当然了，这里最好还是用File.separator</span></span><br><span class="line">		File f2 = <span class="keyword">new</span> File(<span class="string">"d:"</span>+File.separator+<span class="string">"test2.txt"</span>); <span class="comment">// 等效于上一句，推荐这样写</span></span><br><span class="line">		<span class="comment">//创建文件</span></span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			f1.createNewFile();		<span class="comment">//createNewFile方法抛了异常，需要用try...catch</span></span><br><span class="line">		&#125;<span class="keyword">catch</span>(IOException e)&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//删除文件</span></span><br><span class="line">		f1.delete();</span><br><span class="line">		<span class="comment">//创建文件夹</span></span><br><span class="line">		f2.mkdir();</span><br><span class="line">		<span class="comment">//list()列出一个目录中的全部内容,返回字符串数组</span></span><br><span class="line">		String str1[] = f2.list();</span><br><span class="line">		<span class="comment">//listFiles()作用同上，不同的是列出的是文件的详细名称(包含路径)</span></span><br><span class="line">		String str2[] = f2.listFiles();</span><br><span class="line">		<span class="comment">//判断一个给定的路径是不是目录,返回布尔型值</span></span><br><span class="line">		f2.isDirectory();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好，介绍完File类，接下来我们可以了解一下IO流的基本操作了</p>
+<h3 id="IO流的基本操作">IO流的基本操作</h3><p>在程序中所有的数据都是以流的方式进行传输或保存的，程序需要数据是要使用输入流读取数据，而当程序需要将一些数据保存起来的时候，就要使用输出流。<br>在java中IO操作的主要流程如下：</p>
+<ol>
+<li>使用File类打开一个文件。</li>
+<li>通过字节流或字符流的子类指定输出的位置</li>
+<li>进行读/写操作</li>
+<li>关闭输入/输出流</li>
+</ol>
+<h3 id="字节流">字节流</h3><p>字节流主要操作byte类型数据，以byte数组为准，主要操作类为OutputStream和InputStream。</p>
+<h4 id="字节输出流">字节输出流</h4><p>OutputStream是整个IO包中字节输出流的最大父类，此类的定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">OutputStream</span> <span class="keyword">extends</span> <span class="title">Object</span> <span class="keyword">implements</span> <span class="title">Closeable</span>, <span class="title">Flushable</span></span></span><br></pre></td></tr></table></figure>
+<p>由此可知，OutputStream是一个抽象类，要使用此类，需通过其子类来实例化，这里以FileOutputStream为例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*; <span class="comment">//引入io包</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OutputStreamDemo</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;<span class="comment">//此处为了举例方便(其实就是我懒得搞那么多try-catch了),在主函数抛出异常，不处理</span></span><br><span class="line">		<span class="comment">//第一步，使用File找到一个文件，如果不存在，则自动创建</span></span><br><span class="line">		File f = <span class="keyword">new</span> File(<span class="string">"d:"</span>+File.separator+<span class="string">"test.txt"</span>);	<span class="comment">//声明File对象</span></span><br><span class="line">		<span class="comment">// 第二步，通过子类实例化OutputStream对象</span></span><br><span class="line">		OutputStream os = <span class="keyword">null</span>;	<span class="comment">//准备好一个OutputStream流对象</span></span><br><span class="line">		os = <span class="keyword">new</span> FileOutputStream(f);	<span class="comment">//通过多态性，子类实例化父类对象</span></span><br><span class="line">		<span class="comment">//第三步，进行写操作</span></span><br><span class="line">		String str = <span class="string">"I LOVE U"</span>;	<span class="comment">//准备一个字符串</span></span><br><span class="line">		<span class="keyword">byte</span> b[] = str.getBytes();	<span class="comment">//将字符串转换成字符数组</span></span><br><span class="line">		os.write(b);	<span class="comment">//将内容写到文件</span></span><br><span class="line">		<span class="comment">//第四步，关闭输出流</span></span><br><span class="line">		os.close();	<span class="comment">//关闭</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码每次执行，都会覆盖文件里的内容，如果要追加内容，需要用FileOutputStream的另一个构造方法来实例化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第二步，子类实例化父类对象</span></span><br><span class="line">OutputStream os = <span class="keyword">new</span> FileOutputStream(f, <span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="字节输入流">字节输入流</h4><p>既然程序可以向文件写入内容，也可以通过InputStream从文件读取内容。InputStream类的定义如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">InputStream</span> <span class="keyword">extends</span> <span class="title">Object</span> <span class="keyword">implements</span> <span class="title">Closeable</span></span></span><br></pre></td></tr></table></figure></p>
+<p>跟OutputStream一样，InputStream本身也是抽象类，必须依靠子类来实例化，这里我们用FileInputSream举例。<br>从文件中读取内容：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;   <span class="comment">//导包是第一要务</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InputStreamDemo1</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;<span class="comment">//接着省懒事儿，不处理异常</span></span><br><span class="line">        <span class="comment">//第一步，使用File类找到一个文件</span></span><br><span class="line">        File f = <span class="keyword">new</span> File(<span class="string">"d:"</span>+File.separator+<span class="string">"test.txt"</span>);</span><br><span class="line">        <span class="comment">//第二步，通过子类实例化父类对象</span></span><br><span class="line">        InputStream input = <span class="keyword">null</span>;</span><br><span class="line">        input = <span class="keyword">new</span> FileInputStream(f);</span><br><span class="line">        <span class="comment">//第三步，进行读操作</span></span><br><span class="line">        <span class="keyword">byte</span> b[] = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];  <span class="comment">//把所有内容读取到此数组中</span></span><br><span class="line">        input.read(b);  <span class="comment">//读</span></span><br><span class="line">        <span class="comment">//第四步，关闭输入流</span></span><br><span class="line">        input.close();</span><br><span class="line">        System.out.println(<span class="string">"内容是："</span>+<span class="keyword">new</span> String(b));<span class="comment">//把byte数组变为字符串输出</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行上面程序，发现文件内容已经被读取进来了，但是后面会有很多空格，这是因为开辟的byte数组大小为1024，但是实际的内容「I LOVE U」只有8个字节，所以后面会跟着很多空格。为了去掉后面的空格，对程序做出如下修改：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*经过观察read方法，发现有一个返回值，此值表示向数组中写入了多少个数据*/</span></span><br><span class="line"><span class="comment">//修改后的第三步</span></span><br><span class="line"><span class="keyword">byte</span> b[] = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line"><span class="keyword">int</span> len = input.read(b); <span class="comment">//读出内容，并接受其返回值</span></span><br><span class="line"><span class="comment">//在输出内容的时候，修改为</span></span><br><span class="line">System.out.println(<span class="string">"内容："</span>+<span class="keyword">new</span> String(b,<span class="number">0</span>,len));</span><br></pre></td></tr></table></figure></p>
+<p>这样就能把后面的空格去掉。<br>需要注意的是：<strong>在使用FileInputSream读取时如果指定的路径不存在，则程序运行会出现异常</strong><br>上面的代码要通过byte数组接收全部内容，所以如果文件内容小的话，则会造成很多空间浪费，此时我们观 察File类，存在一个length()的方法，此方法可以得到文件的大小，so：另外一个套路，不同的地方依旧在第三步<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//修改的第三步,通过文件长度f.length()来创建byte数组</span></span><br><span class="line"><span class="keyword">byte</span> b[] = <span class="keyword">new</span> <span class="keyword">byte</span>[f.length()];</span><br><span class="line">input.read(b);</span><br></pre></td></tr></table></figure></p>
+<p>以上都是对付已知大小的文件，如果有一个文件，大小未知，则可以通过判断是否读到了文件末尾的方式来读取文件。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第三步修改，当input.read(f)返回值是-1时，表示文件读到了结尾。</span></span><br><span class="line"><span class="keyword">int</span> len =<span class="number">0</span>;	<span class="comment">//用于记录读取数据的个数</span></span><br><span class="line"><span class="keyword">byte</span> b[] = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line"><span class="keyword">int</span> temp = <span class="number">0</span>;	<span class="comment">//接收读取的每一个内容</span></span><br><span class="line"><span class="keyword">while</span>((temp = input.read(b)) != -<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="comment">//将每次读取的内容给temp，如果temp!=-1，表示文件没有读完</span></span><br><span class="line">	b[len] = (<span class="keyword">byte</span>)temp;</span><br><span class="line">	len++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="字符流">字符流</h3><p>在程序中，一个字符等于两个字节，java提供了Reader和Writer两个操作类来进行字符流操作。</p>
+<h4 id="字符输出流_Writer">字符输出流 Writer</h4><p>Writer是一个字符流的输出类，此类定义如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Writer</span> <span class="keyword">extends</span> <span class="title">Object</span> <span class="keyword">implements</span> <span class="title">Appendable</span>,<span class="title">Closeable</span>,<span class="title">Flushable</span></span></span><br></pre></td></tr></table></figure></p>
+<p>可知本类也是一个抽象类，需要通过子类FileWriter来实例化，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WriterDemo</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> thows Exception</span>&#123;<span class="comment">//异常抛抛抛，哇咔咔</span></span><br><span class="line">		<span class="comment">//第一步，依旧是使用File类找到一个文件</span></span><br><span class="line">		File f = <span class="keyword">new</span> File(<span class="string">"d:"</span>+File.separator+<span class="string">"test.txt"</span>);</span><br><span class="line">		<span class="comment">//第二步，子类实例化父类对象</span></span><br><span class="line">		Writer out = <span class="keyword">null</span>;</span><br><span class="line">		out = <span class="keyword">new</span> FileWriter(f);</span><br><span class="line">		<span class="comment">//第三步，进行写操作</span></span><br><span class="line">		String str = <span class="string">"abcdefg"</span>;	<span class="comment">//准备一个字符串</span></span><br><span class="line">		out.write(str);</span><br><span class="line">		<span class="comment">//第四步，关闭输出流</span></span><br><span class="line">		out.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>不难发现，字符输出流和字节输出流几乎没有差别，同样，如果要追加内容，则在实例化输出流对象的时候，将其设置为可追加<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//修改第二步</span></span><br><span class="line">out = <span class="keyword">new</span> FileWriter(f, <span class="keyword">true</span>);</span><br></pre></td></tr></table></figure></p>
+<h4 id="字符数如流_Reader">字符数如流 Reader</h4><p>Reader是使用字符的方式从文件中读取出数据，Reader类的定义如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Reader</span> <span class="keyword">extends</span> <span class="title">Object</span> <span class="keyword">implements</span> <span class="title">Readable</span>, <span class="title">Closeable</span></span></span><br></pre></td></tr></table></figure></p>
+<p>Reader本身也是抽象类，我们使用子类FileReader来实例化对象。从文件中读取内容，示例代码如下，这里使用循环读取的方式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;   <span class="comment">//导包啊导包</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReaderDemo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;<span class="comment">//接着省懒事儿，不处理异常</span></span><br><span class="line">        <span class="comment">//第一步，使用File类找到一个文件</span></span><br><span class="line">        File f = <span class="keyword">new</span> File(<span class="string">"d:"</span>+File.separator+<span class="string">"test.txt"</span>);</span><br><span class="line">        <span class="comment">//第二步，通过子类实例化父类对象</span></span><br><span class="line">        Reader reader = <span class="keyword">null</span>;</span><br><span class="line">        reader = <span class="keyword">new</span> FileReader(f);</span><br><span class="line">        <span class="comment">//第三步，进行读操作</span></span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;	<span class="comment">//用来记录文件长度</span></span><br><span class="line">        <span class="keyword">char</span> ch[] = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">1024</span>];  <span class="comment">//把所有内容读取到此数组中</span></span><br><span class="line">        <span class="keyword">int</span> temp = <span class="number">0</span>;	<span class="comment">//接收读取的每一个内容</span></span><br><span class="line">        <span class="keyword">while</span>((temp = reader.read()) != -<span class="number">1</span>)&#123;</span><br><span class="line">        	ch[len] = (<span class="keyword">char</span>)temp;</span><br><span class="line">        	len++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//第四步，关闭输入流</span></span><br><span class="line">        reader.close();</span><br><span class="line">        System.out.println(<span class="string">"内容是："</span>+<span class="keyword">new</span> String(ch,<span class="number">0</span>,len));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="字节流和字符流的区别">字节流和字符流的区别</h3><p>字节流和字符流的使用非常相似，晾着除了操作代码上的不同之外，还有一个显著的不同点，那就是：字节流在操作的时候本身不会用到缓存区，而字符流操作时使用的缓存区，下面用代码验证这一点：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*; <span class="comment">//引入io包</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OutputStreamDemo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;<span class="comment">//此处为了举例方便(其实就是我懒得搞那么多try-catch了),在主函数抛出异常，不处理</span></span><br><span class="line">        <span class="comment">//第一步，使用File找到一个文件，如果不存在，则自动创建</span></span><br><span class="line">        File f = <span class="keyword">new</span> File(<span class="string">"d:"</span>+File.separator+<span class="string">"test.txt"</span>);  <span class="comment">//声明File对象</span></span><br><span class="line">        <span class="comment">// 第二步，通过子类实例化OutputStream对象</span></span><br><span class="line">        OutputStream os = <span class="keyword">null</span>; <span class="comment">//准备好一个OutputStream流对象</span></span><br><span class="line">        os = <span class="keyword">new</span> FileOutputStream(f);   <span class="comment">//通过多态性，子类实例化父类对象</span></span><br><span class="line">        <span class="comment">//第三步，进行写操作</span></span><br><span class="line">        String str = <span class="string">"I LOVE U"</span>;    <span class="comment">//准备一个字符串</span></span><br><span class="line">        <span class="keyword">byte</span> b[] = str.getBytes();  <span class="comment">//将字符串转换成字符数组</span></span><br><span class="line">        os.write(b);    <span class="comment">//将内容写到文件</span></span><br><span class="line">        <span class="comment">//第四步，关闭输出流</span></span><br><span class="line">        <span class="comment">// os.close(); </span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码注释掉了关闭流这一步操作，通过查看文件可知，虽然没有关闭输出流，但是文件中已经存在了输出的内容。接下来看一看字符流操作：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WriterDemo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> thows Exception</span>&#123;<span class="comment">//异常抛抛抛，哇咔咔</span></span><br><span class="line">        <span class="comment">//第一步，依旧是使用File类找到一个文件</span></span><br><span class="line">        File f = <span class="keyword">new</span> File(<span class="string">"d:"</span>+File.separator+<span class="string">"test.txt"</span>);</span><br><span class="line">        <span class="comment">//第二步，子类实例化父类对象</span></span><br><span class="line">        Writer out = <span class="keyword">null</span>;</span><br><span class="line">        out = <span class="keyword">new</span> FileWriter(f);</span><br><span class="line">        <span class="comment">//第三步，进行写操作</span></span><br><span class="line">        String str = <span class="string">"abcdefg"</span>; <span class="comment">//准备一个字符串</span></span><br><span class="line">        out.write(str);</span><br><span class="line">        <span class="comment">//第四步，关闭输出流</span></span><br><span class="line">        <span class="comment">//out.close();</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>依旧是注释掉第四步，打开文件会发现文件是空的，没有内容输出到文件。这是因为字符流操作时使用了缓冲区，在关闭字符流时会强制性的将缓冲区中的内容进行输出，但是如果没有关闭，则缓冲区的内容无法输出。</p>
+<p>如果既不想关闭字符流，又想把内容输出，需要用到Writer类的flush()方法来强制清空缓冲区。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WriterDemo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> thows Exception</span>&#123;<span class="comment">//异常抛抛抛，哇咔咔</span></span><br><span class="line">        <span class="comment">//第一步，依旧是使用File类找到一个文件</span></span><br><span class="line">        File f = <span class="keyword">new</span> File(<span class="string">"d:"</span>+File.separator+<span class="string">"test.txt"</span>);</span><br><span class="line">        <span class="comment">//第二步，子类实例化父类对象</span></span><br><span class="line">        Writer out = <span class="keyword">null</span>;</span><br><span class="line">        out = <span class="keyword">new</span> FileWriter(f);</span><br><span class="line">        <span class="comment">//第三步，进行写操作</span></span><br><span class="line">        String str = <span class="string">"abcdefg"</span>; <span class="comment">//准备一个字符串</span></span><br><span class="line">        out.write(str);</span><br><span class="line">        <span class="comment">//强制清空缓冲区</span></span><br><span class="line">        out.flush();</span><br><span class="line">        <span class="comment">//第四步，关闭输出流</span></span><br><span class="line">        <span class="comment">//out.close();</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/IO/">
+                #IO
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/08/13/IO进阶/">IO进阶</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2014/08/08/本站的字体图标/">本站的字体图标</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          本站概覽
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="Yantong Wang" />
+        <p class="site-author-name">Yantong Wang</p>
+      </div>
+      <p class="site-description motion-element"></p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <a href="/archives">
+            <span class="site-state-item-count">26</span>
+            <span class="site-state-item-name">文章</span>
+          </a>
+        </div>
+
+        <div class="site-state-item site-state-categories">
+          
+            <span class="site-state-item-count">3</span>
+            <span class="site-state-item-name">分類</span>
+          
+        </div>
+
+        <div class="site-state-item site-state-tags">
+          <a href="/tags">
+            <span class="site-state-item-count">38</span>
+            <span class="site-state-item-name">標籤</span>
+          </a>
+        </div>
+
+      </div>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+      </div>
+
+      
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是IO"><span class="nav-number">1.</span> <span class="nav-text">什么是IO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作文件的类—-File"><span class="nav-number">2.</span> <span class="nav-text">操作文件的类—-File</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IO流的基本操作"><span class="nav-number">3.</span> <span class="nav-text">IO流的基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字节流"><span class="nav-number">4.</span> <span class="nav-text">字节流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字节输出流"><span class="nav-number">4.1.</span> <span class="nav-text">字节输出流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字节输入流"><span class="nav-number">4.2.</span> <span class="nav-text">字节输入流</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符流"><span class="nav-number">5.</span> <span class="nav-text">字符流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符输出流_Writer"><span class="nav-number">5.1.</span> <span class="nav-text">字符输出流 Writer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符数如流_Reader"><span class="nav-number">5.2.</span> <span class="nav-text">字符数如流 Reader</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字节流和字符流的区别"><span class="nav-number">6.</span> <span class="nav-text">字节流和字符流的区别</span></a></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yantong Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>

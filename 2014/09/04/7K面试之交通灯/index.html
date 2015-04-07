@@ -1,0 +1,887 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-next">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.1"/>
+
+
+
+
+	<meta name="keywords" content="交通灯,面试题," />
+
+  <title> 7K面试之交通灯 // 觉知此事要躬行 </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">觉知此事要躬行</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              7K面试之交通灯
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-09-04
+          
+        </span>
+
+        
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <h2 id="需求">需求</h2><p>模拟实现十字路口的交通灯管理系统逻辑，具体需求如下：</p>
+<p>异步随机生成按照各个路线行驶的车辆。<br>例如：</p>
+<ul>
+<li>由南向而来去往北向的车辆 —— 直行车辆</li>
+<li>由西向而来去往南向的车辆 —— 右转车辆</li>
+<li>由东向而来去往南向的车辆 —— 左转车辆</li>
+<li>。。。</li>
+</ul>
+<p>信号灯忽略黄灯，只考虑红灯和绿灯。</p>
+<p>应考虑左转车辆控制信号灯，右转车辆不受信号灯控制。</p>
+<p>具体信号灯控制逻辑与现实生活中普通交通灯控制逻辑相同，不考虑特殊情况下的控制逻辑。</p>
+<p>注：南北向车辆与东西向车辆交替放行，同方向等待车辆应先放行直行车辆而后放行左转车辆。</p>
+<p>每辆车通过路口时间为1秒（提示：可通过线程Sleep的方式模拟）。</p>
+<p>随机生成车辆时间间隔以及红绿灯交换时间间隔自定，可以设置。</p>
+<p>不要求实现GUI，只考虑系统逻辑实现，可通过Log方式展现程序运行结果。</p>
+<h2 id="分析">分析</h2><p>拿到需求之后不要急于编码，要先分析需求，理清思路。</p>
+<p>我们看需求中的关键词</p>
+<ol>
+<li>车</li>
+<li>交通灯</li>
+</ol>
+<p>进一步分析，车是在路上行走，所以需要一条路作为车的载体，而需求中对车没有额外要求，此处可以考虑用字符串表示车。</p>
+<p>现在关键词变更为</p>
+<ol>
+<li>道路</li>
+<li>交通灯</li>
+</ol>
+<p>下面我们依次分析：</p>
+<h3 id="路">路</h3><p>路是车的载体，需要有一个集合，里面是路上的车</p>
+<p>需要一个方法，判断灯的状态，若绿灯，则让最前面的车通过</p>
+<p>还需要一个方法随机的添加车辆</p>
+<h3 id="交通灯">交通灯</h3><p>十字路口，除了四个正方向的路，还需要考虑每个方向的左转和右转，硬想是会把脑袋想爆的，这个时候祭出我们的大杀器：画图</p>
+<p>我偷个懒，直接用张老师的图了</p>
+<p><img src="http://xinjue.qiniudn.com/github%2F201409%2Ftrafficroad.jpg" alt="张老师的交通灯分析图"></p>
+<p>细数一下，一共有12条线路，我们只需将交通灯跟这12条线路对应起来。</p>
+<p>由于12条线路是定死的，不需要改变，我们用枚举类的方式来实现。</p>
+<p>交通灯有两种状态，红和绿，可以用一个布尔变量来表示</p>
+<h3 id="其它">其它</h3><p>有了路和灯，我们还需要一个控制器来控制交通灯</p>
+<h2 id="边编码，边完善">边编码，边完善</h2><h3 id="Road类">Road类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xinjue.traffic;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ScheduledExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"><span class="javadoc">/**</span><br><span class="line"> *<span class="javadoctag"> @author</span> 学习张老师的代码 通过看视频了解思路，手打代码并添加注释增加熟悉度</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Road</span> </span>&#123;</span><br><span class="line">	<span class="comment">//车辆的集合</span></span><br><span class="line">	<span class="keyword">private</span> List&lt;String&gt; vechicles = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">	<span class="comment">//路的名称，用来区分方向</span></span><br><span class="line">	<span class="keyword">private</span> String name = <span class="keyword">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Road</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="comment">// 模拟车辆不断随机上路的过程</span></span><br><span class="line">		ExecutorService pool = Executors.newSingleThreadExecutor();</span><br><span class="line">		pool.execute(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">					<span class="keyword">try</span> &#123;</span><br><span class="line">						<span class="comment">//随机数1-10</span></span><br><span class="line">						Thread.sleep((<span class="keyword">new</span> Random().nextInt(<span class="number">10</span>) + <span class="number">1</span>) * <span class="number">1000</span>);</span><br><span class="line">					&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">						e.printStackTrace();</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="comment">//添加车辆</span></span><br><span class="line">					vechicles.add(Road.<span class="keyword">this</span>.name + <span class="string">"_"</span> + i);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 定时器：每隔一秒检查对应的灯是否为绿，是则放行一辆车</span></span><br><span class="line">		ScheduledExecutorService timer = Executors.newScheduledThreadPool(<span class="number">1</span>);</span><br><span class="line">		timer.scheduleAtFixedRate(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">				<span class="keyword">if</span> (vechicles.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">					<span class="keyword">boolean</span> lighted = Lamp.valueOf(Road.<span class="keyword">this</span>.name).isLighted();</span><br><span class="line">					<span class="keyword">if</span> (lighted) &#123;</span><br><span class="line">						System.out.println(vechicles.remove(<span class="number">0</span>)</span><br><span class="line">								+ <span class="string">" is traversing !"</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;, <span class="number">1</span>, <span class="number">1</span>, TimeUnit.SECONDS);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Lamp类">Lamp类</h3><ul>
+<li>每个Lamp元素代表一个方向上的灯，总共有12个方向，所有总共有12个Lamp元素。</li>
+<li>有如下一些方向上的灯,每两个形成一组，一组灯同时变绿或变红，所以，</li>
+<li>程序代码只需要控制每组灯中的一个灯即可：</li>
+<li>s2n,n2s</li>
+<li>s2w,n2e</li>
+<li>e2w,w2e</li>
+<li>e2s,w2n</li>
+<li>s2e,n2w</li>
+<li>e2n,w2s</li>
+<li>上面最后两行的灯是虚拟的，由于从南向东和从西向北、以及它们的对应方向不受红绿灯的控制，</li>
+<li>所以，可以假想它们总是绿灯。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xinjue.traffic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Lamp &#123;</span><br><span class="line">	<span class="comment">/*每个枚举元素各表示一个方向的控制灯*/</span></span><br><span class="line">	S2N(<span class="string">"N2S"</span>,<span class="string">"S2W"</span>,<span class="keyword">false</span>),S2W(<span class="string">"N2E"</span>,<span class="string">"E2W"</span>,<span class="keyword">false</span>),E2W(<span class="string">"W2E"</span>,<span class="string">"E2S"</span>,<span class="keyword">false</span>),E2S(<span class="string">"W2N"</span>,<span class="string">"S2N"</span>,<span class="keyword">false</span>),</span><br><span class="line">	<span class="comment">/*下面元素表示与上面的元素的相反方向的灯，它们的“相反方向灯”和“下一个灯”应忽略不计！*/</span></span><br><span class="line">	N2S(<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">false</span>),N2E(<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">false</span>),W2E(<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">false</span>),W2N(<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">false</span>),</span><br><span class="line">	<span class="comment">/*由南向东和由西向北等右拐弯的灯不受红绿灯的控制，所以，可以假想它们总是绿灯*/</span></span><br><span class="line">	S2E(<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">true</span>),E2N(<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">true</span>),N2W(<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">true</span>),W2S(<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Lamp</span><span class="params">(String opposite,String next,<span class="keyword">boolean</span> lighted)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.opposite = opposite;</span><br><span class="line">		<span class="keyword">this</span>.next = next;</span><br><span class="line">		<span class="keyword">this</span>.lighted = lighted;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*当前灯是否为绿*/</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">boolean</span> lighted;</span><br><span class="line">	<span class="comment">/*与当前灯同时为绿的对应方向*/</span></span><br><span class="line">	<span class="keyword">private</span> String opposite;</span><br><span class="line">	<span class="comment">/*当前灯变红时下一个变绿的灯*/</span></span><br><span class="line">	<span class="keyword">private</span> String next;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isLighted</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> lighted;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * 某个灯变绿时，它对应方向的灯也要变绿</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">light</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.lighted = <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">if</span>(opposite != <span class="keyword">null</span>)&#123;</span><br><span class="line">			Lamp.valueOf(opposite).light();</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(name() + <span class="string">" lamp is green，下面总共应该有6个方向能看到汽车穿过！"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="javadoc">/**</span><br><span class="line">	 * 某个灯变红时，对应方向的灯也要变红，并且下一个方向的灯要变绿</span><br><span class="line">	 *<span class="javadoctag"> @return</span> 下一个要变绿的灯</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Lamp <span class="title">blackOut</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.lighted = <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">if</span>(opposite != <span class="keyword">null</span>)&#123;</span><br><span class="line">			Lamp.valueOf(opposite).blackOut();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		Lamp nextLamp= <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">if</span>(next != <span class="keyword">null</span>)&#123;</span><br><span class="line">			nextLamp = Lamp.valueOf(next);</span><br><span class="line">			System.out.println(<span class="string">"绿灯从"</span> + name() + <span class="string">"--------&gt;切换为"</span> + next);</span><br><span class="line">			nextLamp.light();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> nextLamp;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="LampController类">LampController类</h3><p>此类主要功能是定时改变灯状态</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xinjue.traffic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ScheduledExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LampController</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Lamp currentLamp;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">LampController</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//刚开始让由南向北的灯变绿;</span></span><br><span class="line">		currentLamp = Lamp.S2N;</span><br><span class="line">		currentLamp.light();</span><br><span class="line">		<span class="comment">/*每隔10秒将当前绿灯变为红灯，并让下一个方向的灯变绿*/</span></span><br><span class="line">		ScheduledExecutorService timer =  Executors.newScheduledThreadPool(<span class="number">1</span>);</span><br><span class="line">		timer.scheduleAtFixedRate(</span><br><span class="line">				<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">					<span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">						System.out.println(<span class="string">"来啊"</span>);</span><br><span class="line">						currentLamp = currentLamp.blackOut();</span><br><span class="line">				&#125;</span><br><span class="line">				&#125;,</span><br><span class="line">				<span class="number">10</span>,</span><br><span class="line">				<span class="number">10</span>,</span><br><span class="line">				TimeUnit.SECONDS);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="程序入口">程序入口</h3><p>完成上面的共组，我们的交通灯管理系统几乎已经搞定，现在需要一个入口，创建出12条路，然后将整个逻辑串起来并执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xinjue.traffic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">/*产生12个方向的路线*/</span></span><br><span class="line">		String [] directions = <span class="keyword">new</span> String[]&#123;</span><br><span class="line">				<span class="string">"S2N"</span>,<span class="string">"S2W"</span>,<span class="string">"E2W"</span>,<span class="string">"E2S"</span>,<span class="string">"N2S"</span>,<span class="string">"N2E"</span>,<span class="string">"W2E"</span>,<span class="string">"W2N"</span>,<span class="string">"S2E"</span>,<span class="string">"E2N"</span>,<span class="string">"N2W"</span>,<span class="string">"W2S"</span></span><br><span class="line">		&#125;;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;directions.length;i++)&#123;</span><br><span class="line">			<span class="keyword">new</span> Road(directions[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">/*产生整个交通灯系统*/</span></span><br><span class="line">		<span class="keyword">new</span> LampController();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="运行结果">运行结果</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">N2S lamp <span class="keyword">is</span> green，下面总共应该有<span class="number">6</span>个方向能看到汽车穿过！</span><br><span class="line">S2N lamp <span class="keyword">is</span> green，下面总共应该有<span class="number">6</span>个方向能看到汽车穿过！</span><br><span class="line">S2N_1 <span class="keyword">is</span> traversing !</span><br><span class="line">S2N_2 <span class="keyword">is</span> traversing !</span><br><span class="line">N2S_1 <span class="keyword">is</span> traversing !</span><br><span class="line">N2S_2 <span class="keyword">is</span> traversing !</span><br><span class="line">N2W_1 <span class="keyword">is</span> traversing !</span><br><span class="line">E2N_1 <span class="keyword">is</span> traversing !</span><br><span class="line">W2S_1 <span class="keyword">is</span> traversing !</span><br><span class="line">S2N_3 <span class="keyword">is</span> traversing !</span><br><span class="line">W2S_2 <span class="keyword">is</span> traversing !</span><br><span class="line">来啊</span><br><span class="line">绿灯从S2N<span class="comment">--------&gt;切换为S2W</span></span><br><span class="line">N2E lamp <span class="keyword">is</span> green，下面总共应该有<span class="number">6</span>个方向能看到汽车穿过！</span><br><span class="line">S2W lamp <span class="keyword">is</span> green，下面总共应该有<span class="number">6</span>个方向能看到汽车穿过！</span><br><span class="line">S2W_1 <span class="keyword">is</span> traversing !</span><br><span class="line">E2N_2 <span class="keyword">is</span> traversing !</span><br><span class="line">S2E_1 <span class="keyword">is</span> traversing !</span><br><span class="line">N2E_1 <span class="keyword">is</span> traversing !</span><br><span class="line">S2W_2 <span class="keyword">is</span> traversing !</span><br><span class="line">N2W_2 <span class="keyword">is</span> traversing !</span><br><span class="line">N2E_2 <span class="keyword">is</span> traversing !</span><br><span class="line">N2E_3 <span class="keyword">is</span> traversing !</span><br><span class="line">W2S_3 <span class="keyword">is</span> traversing !</span><br><span class="line">S2E_2 <span class="keyword">is</span> traversing !</span><br><span class="line">N2W_3 <span class="keyword">is</span> traversing !</span><br><span class="line">W2S_4 <span class="keyword">is</span> traversing !</span><br><span class="line">S2W_3 <span class="keyword">is</span> traversing !</span><br><span class="line">N2W_4 <span class="keyword">is</span> traversing !</span><br><span class="line">N2E_4 <span class="keyword">is</span> traversing !</span><br><span class="line">来啊</span><br><span class="line">绿灯从S2W<span class="comment">--------&gt;切换为E2W</span></span><br><span class="line">W2E lamp <span class="keyword">is</span> green，下面总共应该有<span class="number">6</span>个方向能看到汽车穿过！</span><br><span class="line">E2W lamp <span class="keyword">is</span> green，下面总共应该有<span class="number">6</span>个方向能看到汽车穿过！</span><br><span class="line">E2W_1 <span class="keyword">is</span> traversing !</span><br><span class="line">E2N_3 <span class="keyword">is</span> traversing !</span><br><span class="line">W2E_1 <span class="keyword">is</span> traversing !</span><br><span class="line">W2E_2 <span class="keyword">is</span> traversing !</span><br><span class="line">E2W_2 <span class="keyword">is</span> traversing !</span><br><span class="line">E2W_3 <span class="keyword">is</span> traversing !</span><br><span class="line">W2S_5 <span class="keyword">is</span> traversing !</span><br><span class="line">W2E_3 <span class="keyword">is</span> traversing !</span><br><span class="line">S2E_3 <span class="keyword">is</span> traversing !</span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2><ol>
+<li>理清逻辑在编码</li>
+<li>画图有助于理清思路</li>
+<li>面向对象中，谁拥有数据，谁就对外提供操作数据的方法</li>
+<li>脸皮要后，不能忽略了女朋友</li>
+</ol>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/交通灯/">
+                #交通灯
+              </a>
+            
+              <a href="/tags/面试题/">
+                #面试题
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/09/04/7k面试之银行调度/">7k面试之银行调度</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2014/09/03/Java反射机制/">Java反射机制</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          本站概覽
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="Yantong Wang" />
+        <p class="site-author-name">Yantong Wang</p>
+      </div>
+      <p class="site-description motion-element"></p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <a href="/archives">
+            <span class="site-state-item-count">26</span>
+            <span class="site-state-item-name">文章</span>
+          </a>
+        </div>
+
+        <div class="site-state-item site-state-categories">
+          
+            <span class="site-state-item-count">3</span>
+            <span class="site-state-item-name">分類</span>
+          
+        </div>
+
+        <div class="site-state-item site-state-tags">
+          <a href="/tags">
+            <span class="site-state-item-count">38</span>
+            <span class="site-state-item-name">標籤</span>
+          </a>
+        </div>
+
+      </div>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+      </div>
+
+      
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#路"><span class="nav-number">2.1.</span> <span class="nav-text">路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交通灯"><span class="nav-number">2.2.</span> <span class="nav-text">交通灯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其它"><span class="nav-number">2.3.</span> <span class="nav-text">其它</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#边编码，边完善"><span class="nav-number">3.</span> <span class="nav-text">边编码，边完善</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Road类"><span class="nav-number">3.1.</span> <span class="nav-text">Road类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lamp类"><span class="nav-number">3.2.</span> <span class="nav-text">Lamp类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LampController类"><span class="nav-number">3.3.</span> <span class="nav-text">LampController类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序入口"><span class="nav-number">3.4.</span> <span class="nav-text">程序入口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行结果"><span class="nav-number">4.</span> <span class="nav-text">运行结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yantong Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>

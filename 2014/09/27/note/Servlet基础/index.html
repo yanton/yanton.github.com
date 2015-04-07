@@ -1,0 +1,930 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-next">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.1"/>
+
+
+
+
+	<meta name="keywords" content="servlet," />
+
+  <title> Servlet基础 // 觉知此事要躬行 </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">觉知此事要躬行</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Servlet基础
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-09-27
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/笔记/">笔记</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>servlet是一个动态资源.</p>
+<h2 id="servlet干什么用的?"><code>servlet</code>干什么用的?</h2><p><code>servlet</code>就是用来处理请求,生成响应.</p>
+<h2 id="我们如何创建一个Servlet?">我们如何创建一个<code>Servlet</code>?</h2><ol>
+<li>实现<code>servlet</code>接口即可.</li>
+<li>继承<code>javax.servlet.GenericServlet</code></li>
+<li>继承<code>javax.servlet.http.HttpServlet</code></li>
+</ol>
+<h2 id="Servlet的声明周期方法"><code>Servlet</code>的声明周期方法</h2><p>生命周期指的是 必须要经历的过程.对于servlet来讲,有3个生命周期方法.</p>
+<ol>
+<li>出生 ==&gt; <code>init</code>方法.在构造方法调用之后 调用.</li>
+<li>使命 ==&gt; <code>service</code>方法 ,当请求发来时,处理请求使用.</li>
+<li>销毁 ==&gt; <code>destory</code>方法, 当服务器关闭时,会销毁<code>servlet</code>,在销毁之前调用该方法释放资源.</li>
+</ol>
+<h2 id="Servlet中的其他方法-"><code>Servlet</code>中的其他方法.</h2><ul>
+<li><code>getServletInfo</code> : 获得<code>servlet</code>的信息(版本,作者,版权..),没用.</li>
+<li><code>getServletConfig</code> : 返回<code>servletConfig</code>对象.</li>
+</ul>
+<h2 id="ServletConfig对象是什么?"><code>ServletConfig</code>对象是什么?</h2><p><code>ServletConfig</code>封装了<code>servlet</code>在<code>web.xml</code>中的配置.</p>
+<p>其中的方法:</p>
+<ol>
+<li><code>getServletName</code>: 获得配置文件中<code>&lt;servlet-name&gt;</code>元素的内容</li>
+<li><p><code>getInitParameter</code>: 根据 <code>&lt;init-param&gt;</code>中的 <code>&lt;param-name&gt;</code> 获得 <code>&lt;/param-value&gt;</code></p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">param-name</span>&gt;</span>name<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">param-value</span>&gt;</span>tom<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>getInitParameterNames</code> 返回所有<code>&lt;param-name&gt;</code> .</p>
+</li>
+<li><code>getServletContext</code>(后面有)</li>
+</ol>
+<h2 id="其他实现server的方式">其他实现server的方式</h2><ul>
+<li>GenericServlet:<ol>
+<li>帮我们妥善的保管ServletConfig对象</li>
+<li>实现了ServletConfig接口 ==&gt; 为调用方便<br>注意: 不要重写servlet接口中的 init方法.  不然 第一步优化就白做了. 我们要做初始化的动作,需要去重写GenericServlet提供的空参init方法.</li>
+</ol>
+</li>
+<li>HTTPServlet:<ol>
+<li>因为我们web项目基于HTTP协议,所以Service方法中传过来的request,response对象都是 基于HTTP协议的. 也就是HttpServletReueqst,也就是HttpServletResponse. 它帮我们进行了强转.</li>
+<li>我们有可能在不同的请求方式时做不同的事情. 根据请求方式不同,调用不同的方法, 例如<ul>
+<li>GET —&gt; doGet()</li>
+<li>POST ==&gt; doPost();</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="Servlet中的其他细节">Servlet中的其他细节</h2><h3 id="关于Servlet线程安全问题!">关于Servlet线程安全问题!</h3><p>因为在servlet运行期间只有一个servlet实例存在.可能会同时处理多个请求.那么我们在servlet中声明成员变量来存储用户数据是有线程安全问题的.我们应该如何解决呢?</p>
+<ul>
+<li>实现SigleThreadModel  (不推荐了!)</li>
+<li>使用局部变量保存用户数据.(推荐使用!)</li>
+</ul>
+<h3 id="关于servlet随着项目的启动而创建">关于servlet随着项目的启动而创建</h3><p>使用<load-on-startup>配置来实现.<br>例如:</load-on-startup></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>AServlet<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>cn.itcast.servlet.hello.AServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">load-on-startup</span>&gt;</span>3<span class="tag">&lt;/<span class="title">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>填写一个整数,整数越小优先级越高.如果优先级一样,启动顺序按照配置顺序.</p>
+<h3 id="关于Servlet路径配置问题详解">关于Servlet路径配置问题详解</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;url-pattern&gt;</span><br><span class="line"> 路径匹配:</span><br><span class="line"><span class="regexp">/AServlet            http:/</span><span class="regexp">/localhost:8080/</span>Day07-servlet/AServlet</span><br><span class="line"><span class="regexp">/ABC/</span>AServlet        <span class="string">http:</span><span class="comment">//localhost:8080/Day07-servlet/ABC/AServlet</span></span><br><span class="line"><span class="regexp">/ABC/</span>ABC<span class="regexp">/AServlet    http:/</span><span class="regexp">/localhost:8080/</span>Day07-servlet<span class="regexp">/ABC/</span>ABC/AServlet</span><br><span class="line"><span class="regexp">/ABC/</span>ABC<span class="comment">/*			 http://localhost:8080/Day07-servlet/ABC/ABC/oasdojasdjioasd</span><br><span class="line"><span class="comment">/*					 http://localhost:8080/Day07-servlet/asdiojoiajsidojoasd</span><br><span class="line">/ 相当于 <span class="comment">/*</span><br><span class="line">后缀名匹配:</span><br><span class="line">*.do ==&gt; struts</span><br><span class="line">*.action ==&gt; struts2</span><br><span class="line">*.html ==&gt;</span></span></span></span><br></pre></td></tr></table></figure>
+<p>注意:</p>
+<ol>
+<li>关于路径,配置的路径匹配范围越大优先级越低.</li>
+<li>两种匹配模式不能混用. 例如错误的例子: /*.do</li>
+</ol>
+<h2 id="关于tomcat的目录下的web-xml配置(了解)">关于tomcat的目录下的web.xml配置(了解)</h2><ol>
+<li>default servlet的配置</li>
+<li>jsp   servlet的配置</li>
+<li><code>&lt;session-config&lt;session-timeout&gt;30&lt;/session-timeout&gt;&lt;/session-config&gt;</code></li>
+<li>互联网中所有mime类型</li>
+<li>欢迎页面配置</li>
+</ol>
+<h2 id="相关对象之_——_ServletContext">相关对象之 —— ServletContext</h2><h3 id="获得：servletConfig-getServletContext()">获得：<code>servletConfig.getServletContext()</code></h3><h3 id="servletContext_的作用">servletContext 的作用</h3><p>1.servletContext 封装了web.xml 中的配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">context-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">param-name</span>&gt;</span>name<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">param-value</span>&gt;</span>jerry<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">context-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">context-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">param-name</span>&gt;</span>password<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">param-value</span>&gt;</span>1234<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">context-param</span>&gt;</span></span><br><span class="line">//获得所有键</span><br><span class="line">getInitParameterNames();</span><br><span class="line">//根据键获得对应的值</span><br><span class="line">getInitParameter(key);</span><br></pre></td></tr></table></figure>
+<p>2.servlet技术中3大域对象之一.</p>
+<p>ServletContext对应着Application(应用)域.利用了一个项目中只有一个ServletContext实例的特点.在servletContext中放置了一个map用作数据通信.这个Map就是所谓域.关于域的操作,有4个.</p>
+<ul>
+<li>放入键值对 setAttribute(key,value)</li>
+<li>通过键取值 getAttribute(key)</li>
+<li>通过键删除 removeAttribute(key)</li>
+<li>遍历所有键 getAttributeNames()</li>
+</ul>
+<p>3.获得项目中资源.</p>
+<p>所有servletContext中关于路径的获得,相对路径都是相对的 WebRoot(项目根)下</p>
+<ul>
+<li><code>getRealPath</code>: 通过相对路径获得绝对路径</li>
+<li><code>getResourceAsStream</code>: 根据相对路径获得指定资源流</li>
+</ul>
+<h3 id="servlet技术中对象的范围">servlet技术中对象的范围</h3><ul>
+<li><code>servlet</code>: 项目启动期间一个servlet只有一个servlet实例</li>
+<li><code>request</code>: 项目启动期间,request对象的数量,要看当前有多少个请求正在处理.</li>
+<li><code>response</code>: 同上.</li>
+<li><code>servletConfig</code>: 一个servlet实例对应一个servletConfig对象</li>
+<li><code>servletContext</code>: 整个项目中,永远只有一个servletContext实例存在.</li>
+</ul>
+<h2 id="路径问题">路径问题</h2><h3 id="如果获得的是包下的,那么太麻烦了-">如果获得的是包下的,那么太麻烦了.</h3><ul>
+<li>一:使用getClass().getResourceAsStream方法,相对路径分为两种情况<ol>
+<li>加”/“: 相对的是classes目录</li>
+<li>不加”/“: 相对的是本类当前目录<br><code>InputStream is = this.getClass().getResourceAsStream(&quot;students.xml&quot;);</code><br><code>System.out.println(is);</code></li>
+</ol>
+</li>
+<li>二:使用this.getClass().getClassLoader().getResourceAsStream(“”);获得<br>  只有一个相对路径 ==&gt; 就是相对于 classes目录<br>  <code>InputStream is2 = this.getClass().getClassLoader().getResourceAsStream(&quot;students.xml&quot;);</code><br>  <code>System.out.println(is2);</code></li>
+</ul>
+<p>注意: 使用类和类加载器加载资源文件时</p>
+<p>jvm运行期间只加载一次. 但是使用下面的代码可以解决这个问题.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String path = <span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"students.xml"</span>).getPath();</span><br><span class="line">File file = <span class="keyword">new</span> File(path.substring(<span class="number">1</span>, path.length()));</span><br><span class="line">System.out.println(path);</span><br></pre></td></tr></table></figure>
+<p>getClassLoader()原本是用来加载.class文件的, 所以缓存设计的很小.不要用他加载一些别较大的资源.</p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/servlet/">
+                #servlet
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/10/08/note/Request-and-Response/">Request and Response</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2014/09/24/note/http协议/">http协议</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          本站概覽
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="Yantong Wang" />
+        <p class="site-author-name">Yantong Wang</p>
+      </div>
+      <p class="site-description motion-element"></p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <a href="/archives">
+            <span class="site-state-item-count">26</span>
+            <span class="site-state-item-name">文章</span>
+          </a>
+        </div>
+
+        <div class="site-state-item site-state-categories">
+          
+            <span class="site-state-item-count">3</span>
+            <span class="site-state-item-name">分類</span>
+          
+        </div>
+
+        <div class="site-state-item site-state-tags">
+          <a href="/tags">
+            <span class="site-state-item-count">38</span>
+            <span class="site-state-item-name">標籤</span>
+          </a>
+        </div>
+
+      </div>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+      </div>
+
+      
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet干什么用的?"><span class="nav-number">1.</span> <span class="nav-text">servlet干什么用的?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我们如何创建一个Servlet?"><span class="nav-number">2.</span> <span class="nav-text">我们如何创建一个Servlet?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet的声明周期方法"><span class="nav-number">3.</span> <span class="nav-text">Servlet的声明周期方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet中的其他方法-"><span class="nav-number">4.</span> <span class="nav-text">Servlet中的其他方法.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ServletConfig对象是什么?"><span class="nav-number">5.</span> <span class="nav-text">ServletConfig对象是什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他实现server的方式"><span class="nav-number">6.</span> <span class="nav-text">其他实现server的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet中的其他细节"><span class="nav-number">7.</span> <span class="nav-text">Servlet中的其他细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于Servlet线程安全问题!"><span class="nav-number">7.1.</span> <span class="nav-text">关于Servlet线程安全问题!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于servlet随着项目的启动而创建"><span class="nav-number">7.2.</span> <span class="nav-text">关于servlet随着项目的启动而创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于Servlet路径配置问题详解"><span class="nav-number">7.3.</span> <span class="nav-text">关于Servlet路径配置问题详解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于tomcat的目录下的web-xml配置(了解)"><span class="nav-number">8.</span> <span class="nav-text">关于tomcat的目录下的web.xml配置(了解)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关对象之_——_ServletContext"><span class="nav-number">9.</span> <span class="nav-text">相关对象之 —— ServletContext</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获得：servletConfig-getServletContext()"><span class="nav-number">9.1.</span> <span class="nav-text">获得：servletConfig.getServletContext()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#servletContext_的作用"><span class="nav-number">9.2.</span> <span class="nav-text">servletContext 的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#servlet技术中对象的范围"><span class="nav-number">9.3.</span> <span class="nav-text">servlet技术中对象的范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路径问题"><span class="nav-number">10.</span> <span class="nav-text">路径问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如果获得的是包下的,那么太麻烦了-"><span class="nav-number">10.1.</span> <span class="nav-text">如果获得的是包下的,那么太麻烦了.</span></a></li></ol></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yantong Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>

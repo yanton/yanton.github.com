@@ -1,0 +1,915 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-next">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.1"/>
+
+
+
+
+	<meta name="keywords" content="Grunt,Gulp,NPM," />
+
+  <title> 前端JS构建工具大比拼：Grunt vs Gulp vs NPM // 觉知此事要躬行 </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">觉知此事要躬行</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              前端JS构建工具大比拼：Grunt vs Gulp vs NPM
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-08-16
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/技术储备/">技术储备</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>应陈哥之邀翻译此文，E文水平有限，相关专业词汇储备有限，这里是<a href="http://blog.ponyfoo.com/2014/07/04/choose-grunt-gulp-or-npm" target="_blank" rel="external">原文地址</a></p>
+<blockquote>
+<p><a href="http://modernweb.com/authors/nicolas-bevacqua/" target="_blank" rel="external">Nicolas Bevacqua</a>正在钻研如何选择一个JavaScript构建系统。他比较了当前最流行的三个工具：Grunt，Gulp和NPM，并且讨论了它们各自的优缺点。</p>
+</blockquote>
+<p>原文作者：<a href="http://modernweb.com/authors/nicolas-bevacqua/" target="_blank" rel="external">Nicolas Bevacqua</a></p>
+<p>敲定使用一项技术实在是太困难了。你不想做出你无法收回的承诺，但是最终还是不得不选择一种技术，去做一些你需要它做的事情。这一点跟选择构建技术一样：它是一个你需要认真对待的重要选择。我们以<a href="http://gruntjs.com/" target="_blank" rel="external">Grunt</a>为例。</p>
+<ul>
+<li><a href="http://gruntjs.com/" target="_blank" rel="external">Grunt</a>拥有一个健康的社区，即使是Windows环境</li>
+<li>它不仅仅在Node社区使用</li>
+<li>不需要懂得先进的概念，也不需要储备大量的先验知识</li>
+</ul>
+<p>这些都是使用Grunt的优势，但是我想声明的是，我不认为Grunt是现有的构建工具中的唯一最优选择。还有其它一些流行的构建工具，它们或许比Grunt更好的切合你的需求。</p>
+<p>我写的这篇总结就是为了帮助你们了解Grunt、Gulp和NPM之间的不同。这三个工具是我从事前端开发工作流程中最常用的三个构建工具。当我讲解的时候，我会列举出一个工具在什么情况下会比其它的更好。</p>
+<p>首先，我们先讨论一下Grunt的优势何在。</p>
+<h2 id="Grunt：优势所在">Grunt：优势所在</h2><p>Grunt最好的一点便是它的易用性。它能让程序员毫不费力的用JavaScript开发构建流程。需要做的仅仅是找到合适的插件，阅读插件文档，安装插件并配置好它。这种易用性意味着拥有不同技能层级的大型开发团队的成员，可以毫无压力的调整构建流程以符合项目的最新的需求。该团队甚至也不需要熟练的使用Node，他们只需要为组成构建流程的配置对象、任务名称和各种数组们添加内容。</p>
+<p>已有的插件如此之多，以至于你会发现你几乎用不到开发自己的构建任务；使得你和你的团队能够快速的开发一个构建进程，而这对于追寻Build First范式的你来说及其重要，即使工作少许，也能逐渐开发出你自己的构建流程。</p>
+<p>通过Grunt来应付部署任务也是可行的，它有如此多的插件包来搞定这些任务们，比如<code>grunt-git</code>，<code>grunt-rsync</code>，或者<code>grunt-ec2</code>等等。</p>
+<p>那么Grunt的短板在哪里？如果你有一个相当大的构建流程，那它可能会变得非常冗长。通常从整体上搞清楚一个已经被开发的构建流程会很困难。一旦构建流程中的任务达到了两位数，可以保证的说你将不得不分别运行同一个任务中的目标，确保你能够以正确的顺序编译这个流程。由于任务是在配置文件中声明的，弄清楚执行任务的顺序也很困难。</p>
+<p>此外，在构建的时候你的团队应该致力于书写可维护的代码。对于Grunt来说就是维护每个任务的配置文件，或者起码维护你的团队所用到的构建流程。</p>
+<p>既然我们已经道出了Grunt的优点和缺点，也明了什么情况下它会更适合你的项目，接下来让我说一说NPM，作为一个构建工具，它是如何 「四两拨千斤」的，它和Grunt又有什么不同呢？</p>
+<h2 id="npm构建工具">npm构建工具</h2><p>为了能将npm作为构建工具使用，你需要一个<code>package.json</code>文件和<code>npm</code>。给npm定义任务就像给给你的package清单中的<code>scripts</code>对象添加属性一样简单。属性名成将会用作任务名，而其值存储的是你想要执行的命令。下面这个示例使用JSHint命令行接口通过js文件运行了一个命令，并且检验。你可以运行任何你需要的shell命令。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"test"</span>: <span class="string">"jshint . --exclude node_modules"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"jshint"</span>: <span class="string">"^2.5.1"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一旦定义好了任务，你可以在你的命令行运行如下命令来使之执行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是，npm为特定的任务名称提供了快捷方式。在上面这个<code>test</code>中，你可以省略掉中间的<code>run</code>，仅输入<code>npm test</code>即可。你可以在script声明中把<code>npm run</code>命令都连接到一起来编译构建流程。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"lint"</span>: <span class="string">"jshint . --exclude node_modules"</span>,</span><br><span class="line">    <span class="string">"unit"</span>: <span class="string">"tape test/*"</span>,</span><br><span class="line">    <span class="string">"test"</span>: <span class="string">"npm run lint &amp;&amp; npm run unit"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"jshint"</span>: <span class="string">"^2.5.1"</span>,</span><br><span class="line">    <span class="string">"tape"</span>: <span class="string">"~2.10.2"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你也可以以后台工作的方式规划任务，使其异步工作。假设我们有下列的package文件，我们只是想在我们的JavaScript构建流程中复制目录和在CSS构建流程中编译一个stylus文件(stylus是一个CSS预处理器)。此时，异步运行这些任务是非常完美的。你可以通过使用<code>&amp;</code>符号或者在一个命令之后来实现这些。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"build-js"</span>: <span class="string">"cp -r src/js/vendor bin/js"</span>,</span><br><span class="line">    <span class="string">"build-css"</span>: <span class="string">"stylus src/css/all.styl -o bin/css"</span>,</span><br><span class="line">    <span class="string">"build"</span>: <span class="string">"npm run build-js &amp; npm run build-css"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"stylus"</span>: <span class="string">"^0.45.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>想学更多如何使用npm构建工具，你应该试着去学如何写<code>Bash</code>命令。</p>
+<h3 id="安装npm的任务依赖">安装npm的任务依赖</h3><p>你的系统中并不一定需要JSHint CLI，有两种安装它的方式。如果你想在你的命令行里直接使用这个工具，而不是在<code>npm run</code>任务里，你需要全局安装，使用<code>-g</code>标志，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g jshint</span><br></pre></td></tr></table></figure>
+<p>然而，如果你在<code>npm run</code>任务中使用这个包，你需要把它作为<code>devDependency</code>来添加，如下所示。这会允许npm在依赖包安装的系统中寻找到JSHint包，而不是期待JSHint全局安装在环境中。这适用于在操作系统中不是有效的各种CLI工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev jshint</span><br></pre></td></tr></table></figure>
+<p>你不仅仅可以使用CLI工具，事实上npm能够运行任何shell脚本。让我们深入了解一下！</p>
+<h3 id="在npm任务中使用shell脚本">在npm任务中使用shell脚本</h3><p>下面是一个在Node上运行的脚本，显示了随机的emoji字符串。第一行告诉我们这个脚本的运行环境是Node。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!<span class="regexp">/usr/</span>bin/env node</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> emoji = <span class="built_in">require</span>(<span class="string">'emoji-random'</span>);</span><br><span class="line"><span class="keyword">var</span> emo = emoji.random();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(emo);</span><br></pre></td></tr></table></figure>
+<p>如果你想将脚本放置到名为<code>emoji</code>的文件中，并将这个文件置于项目的根目录下，你需要将<code>emoji-random</code>声明成一个依赖，并向package清单中的<code>scripts</code>对象中添加命令。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"emoji"</span>: <span class="string">"./emoji"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"emoji-random"</span>: <span class="string">"^0.1.2"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一旦搞定这些，运行命令不过是在你的终端里调用<code>npm run emoji</code>而已。</p>
+<h3 id="优点和缺点">优点和缺点</h3><p>把npm当作构建工具比使用Grunt要多一些优势。你不必拘泥于Grunt的各种插件，可以利用拥有数万的npm包。除了<code>npm</code>你甚至不需要安装任何多余的CLI工具或文件，就可以管理你的依赖，和罗列了所有依赖和构建命令的<code>package.json</code>清单。由于<code>npm</code>运行CLI工具和Bash命令更直接，它会比Grunt表现的更好。</p>
+<p>需要考虑到Grunt的最大的缺点之一，便是它的I/O限制。这意味着大多数的Grunt任务是从硬盘读取的，然后在写入到硬盘。如果你有几个任务共同使用一个文件，那么这个文件有可能会从硬盘多次读取。在Bash中，命令会连接成一个管道，一个命令输出接着下一个，这样就避免了像Grunt那样的额外I/O开销。</p>
+<p>或许npm最大的缺点是Bash命令行在Windows系统环境中无法得到很好的支持。这意味着在Windows系统中把玩使用<code>npm run</code>的开源项目运行起来的项目可能会出各种「小意外」。同样，这也意味着使用Windows的开发者需要尝试使用<code>npm</code>的替代品。这一缺点几乎排除了在Windows中使用<code>npm</code>。</p>
+<p>Gulp，另一个构建工具，表现的跟Grunt和npm相似，接下来你会了解到它。</p>
+<h2 id="Gulp，一个流构建工具">Gulp，一个流构建工具</h2><p>Gulp和Grunt相似，它们都依赖各种各样的插件，并且Gulp是跨平台的，同样支持Windows用户。Gulp是一个代码驱动型的构建工具，相比于Grunt的用声明的方式来给任务定义，Gulp会让你的任务定义更容易阅读。Gulp也跟<code>npm run</code>很相似，她们都使用Node数据流来读取文件，并且通过函数来传递数据，将其转换为输出，在输出结束后将数据写入硬盘。这就使得Gulp没有Grunt那样对硬盘频繁进行I/O操作的缺点。正因消耗更少的I/O操作时间，Gulp才会比Grunt速度快。</p>
+<p>Gulp最主要的缺点在于它严重依赖流，管道和异步代码。别误会我：如果你使用Node，那这些都是它的优点。但这些观念的问题是除非你和你的团队精通Node，否则你将会陷入处理「流」的问题中，特别是如果你不得不构建自己的Gulp任务插件时。</p>
+<p>在团队协作时，Gulp并不禁止使用<code>npm</code>，因为大多前端团队成员都懂得JavaScript，但也有可能他们并不能流畅的使用Bash脚本，甚至有些人使用的是Windows系统。这就是为什么我通常建议在你自己的项目中保持使用<code>npm run</code>，在对Node熟悉的团队项目中使用Gulp，其它情况下都可以使用Grunt。当然了，这只是我的个人建议，你应该自己想清楚哪一个最适合你的你的团队。还有，你也不要把你自己局限于Grunt，gulp或者<code>npm run</code>，它们仅仅是为我所用的工具。尝试去做一点调查研究，或许你就能发现一个你觉得比这三个都好用的工具。</p>
+<p>让我们瞅一些案例，感受一下Gulp任务看起来是个什么东东。</p>
+<h3 id="用Gulp运行测试">用Gulp运行测试</h3><p>Gulp有着和Grunt及其相似的约定。在Grunt中使用<code>Gruntfile.js</code>文件来定义你的构建任务，在Gulp中需要把这个文件命名为<code>Gulpfile.js</code>。其它的小区别是当任务运行时，Gulp的CLI包含在相同的包内，所以你将不得不通过npm在本地和全局都安装上<code>gulp</code>包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">touch Gulpfile.js</span><br><span class="line">npm install -g gulp</span><br><span class="line">mpm install --save-dev gulp</span><br></pre></td></tr></table></figure>
+<p>一开始，我会创建一个Gulp任务：使用JSHint检查一个JavaScript文件，就像你在Grunt和<code>npm run</code>中已经看到的一样。你需要为JSHint安装<code>gulp-jshint</code>插件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev gulp-jshint</span><br></pre></td></tr></table></figure>
+<p>现在你已经用CLI完全装备好了，全局安装，本地的<code>gulp</code>安装和<code>gulp-jshint</code>插件，你可以将构建任务汇集到一起来运行检查器。用Gulp定义构建任务，你必须将它们写入<code>Gulpfile.js</code>文件中。</p>
+<p>首先你需要使用<code>gulp.task</code>，并给它传递一个任务名称和函数。这个函数包含运行任务所必须的代码。这里你应该用<code>gulp.src</code>来创建一个读入流到你的源文件中，像我们在学习Grunt中一样使用一个全局配置。相同的流应该引导至JSHint插件，在这里你可以自行配置或者使用默认配置。之后你所需做的是通过指示器链接JSHint的结果，然后将结果输出到你的终端。所有我所描述的结果都基于下面呈现的Gulpfile。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"><span class="keyword">var</span> jshint = <span class="built_in">require</span>(<span class="string">'gulp-jshint'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'test'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp</span><br><span class="line">    .src(<span class="string">'./sample.js'</span>)</span><br><span class="line">    .pipe(jshint())</span><br><span class="line">    .pipe(jshint.reporter(<span class="string">'default'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我还应该提到我正在返回数据流，使得Gulp能明白在任务完成之前，它应该等待数据停止流动。为了能让输出更容易被人类阅读，你应该使用默认的JSHint指示器。JSHint指示器不需要作为Gulp插件，因此你可以使用<code>jshint-sytlish</code>为例。让我们本地安装它。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev jshint-stylish</span><br></pre></td></tr></table></figure>
+<p>更新后的Gulpfile应该如下所示。它将会读取<code>jshint-stylish</code>模式来格式化指示器的输出。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"><span class="keyword">var</span> jshint = <span class="built_in">require</span>(<span class="string">'gulp-jshint'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'test'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp</span><br><span class="line">    .src(<span class="string">'./sample.js'</span>)</span><br><span class="line">    .pipe(jshint())</span><br><span class="line">    .pipe(jshint.reporter(<span class="string">'jshint-stylish'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>你做到了！！这就是名为<code>test</code>的Gulp任务所有的声明。用下面的命令使之运行，确保你全局安装了<code>gulp</code>CLI。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p>这只是一个简单的小案例。就像你通过可以打印检验结果的指示器输出JSHint检验的结果，你甚至可以用<code>gulp.dest</code>将输出写入硬盘。接下来我们探寻另一个构建任务。</p>
+<h3 id="在Gulp中构建一个库">在Gulp中构建一个库</h3><p>在一开始，我们来设定一下最低限度：使用<code>gulp.src</code>从硬盘读取并切通过用管道传输<code>gulp.dest</code>中源文件的内容来写回到硬盘，有效的见文件复制到其它目录中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'build'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp</span><br><span class="line">    .src(<span class="string">'./sample.js'</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'./build'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>复制文件挺不错的，但是它并不能是文件内容最小化。为了达到这个效果，你还需要使用一个Gulp插件。这种情况下可以用<code>gulp-uglify</code>，一个流行的UglifyJs压缩插件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"><span class="keyword">var</span> uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'build'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp</span><br><span class="line">    .src(<span class="string">'./sample.js'</span>)</span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'./build'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如你所料，流操作使得你可以添加一堆插件，但是却只需要对硬盘实行一次读写操作。作为一个例子：我们可以使用<code>gulp-size</code>(它能够计算出缓存区内容的大小，并且输出到终端)。注意，如果你把它添加在Uglify之前，你会得到原始大小，而添加到Uglify之后，则会得到压缩后的大小。你也可以在前后都添加。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"><span class="keyword">var</span> uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>);</span><br><span class="line"><span class="keyword">var</span> size = <span class="built_in">require</span>(<span class="string">'gulp-size'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'build'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp</span><br><span class="line">    .src(<span class="string">'./sample.js'</span>)</span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(size())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'./build'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>为了加强可组合型，能够按需添加和移除pipe，我们最后需要添加一个插件。这一次，我将使用<code>gulp-header</code>来向压缩的代码片段中添加一些许可信息，例如名称，包的版本号，和许可的类型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"><span class="keyword">var</span> uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>);</span><br><span class="line"><span class="keyword">var</span> size = <span class="built_in">require</span>(<span class="string">'gulp-size'</span>);</span><br><span class="line"><span class="keyword">var</span> header = <span class="built_in">require</span>(<span class="string">'gulp-header'</span>);</span><br><span class="line"><span class="keyword">var</span> pkg = <span class="built_in">require</span>(<span class="string">'./package.json'</span>);</span><br><span class="line"><span class="keyword">var</span> info = <span class="string">'// &lt;%= pkg.name %&gt;@v&lt;%= pkg.version %&gt;, &lt;%= pkg.license %&gt;\n'</span>;</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'build'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> gulp</span><br><span class="line">    .src(<span class="string">'./sample.js'</span>)</span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(header(info, &#123; pkg : pkg &#125;))</span><br><span class="line">    .pipe(size())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">'./build'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>就像在Grunt中一样，在Gulp中你可以通过向<code>gulp.task</code>中传递名称数组来定义流程。而不是通过函数。Grunt和Gulp最主要的区别是Gulp会异步执行这些依赖，而Grunt是同步执行的。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&#39;build&#39;,[&#39;builid-js&#39;,&#39;build-css&#39;]);</span><br></pre></td></tr></table></figure>
+<p>在Gulp中，如果你想同步运行任务，你不得不将任务作为依赖来声明，然后定义你自己的任务。所有依赖会在你的任务开始之前执行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'build'</span>, [<span class="string">'dep'</span>], <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// here goes the task that depends on 'dep'</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如果你能从本文中有所收获，那么请记下下面的话：</p>
+<blockquote>
+<p>你用什么工具并不重要，关键在于它能够让你编译构建流程的工作更轻松。</p>
+</blockquote>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Grunt/">
+                #Grunt
+              </a>
+            
+              <a href="/tags/Gulp/">
+                #Gulp
+              </a>
+            
+              <a href="/tags/NPM/">
+                #NPM
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/08/20/类集框架/">Java类集框架</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2014/08/16/比较器浅析/">比较器浅析</a>
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          本站概覽
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="Yantong Wang" />
+        <p class="site-author-name">Yantong Wang</p>
+      </div>
+      <p class="site-description motion-element"></p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <a href="/archives">
+            <span class="site-state-item-count">26</span>
+            <span class="site-state-item-name">文章</span>
+          </a>
+        </div>
+
+        <div class="site-state-item site-state-categories">
+          
+            <span class="site-state-item-count">3</span>
+            <span class="site-state-item-name">分類</span>
+          
+        </div>
+
+        <div class="site-state-item site-state-tags">
+          <a href="/tags">
+            <span class="site-state-item-count">38</span>
+            <span class="site-state-item-name">標籤</span>
+          </a>
+        </div>
+
+      </div>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+      </div>
+
+      
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grunt：优势所在"><span class="nav-number">1.</span> <span class="nav-text">Grunt：优势所在</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npm构建工具"><span class="nav-number">2.</span> <span class="nav-text">npm构建工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装npm的任务依赖"><span class="nav-number">2.1.</span> <span class="nav-text">安装npm的任务依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在npm任务中使用shell脚本"><span class="nav-number">2.2.</span> <span class="nav-text">在npm任务中使用shell脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点和缺点"><span class="nav-number">2.3.</span> <span class="nav-text">优点和缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gulp，一个流构建工具"><span class="nav-number">3.</span> <span class="nav-text">Gulp，一个流构建工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用Gulp运行测试"><span class="nav-number">3.1.</span> <span class="nav-text">用Gulp运行测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Gulp中构建一个库"><span class="nav-number">3.2.</span> <span class="nav-text">在Gulp中构建一个库</span></a></li></ol></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yantong Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>

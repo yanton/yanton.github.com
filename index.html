@@ -1,0 +1,1765 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-next">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.1"/>
+
+
+
+
+
+    <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+    <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.1" />
+
+
+
+
+  <title> 觉知此事要躬行 </title>
+</head>
+
+<body>
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">觉知此事要躬行</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/10/09/note/Cookie和Session/">
+                Cookie和Session
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-10-09
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/笔记/">笔记</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <blockquote>
+<p>http协议是无状态的,每次都是基于一个请求一个响应.每次请求和响应都跟上次没有关系。我们需要将之前的会话信息记录下来。Cookie和Session技术能帮住我们解决这个问题。</p>
+</blockquote>
+<h1 id="Cookie：客户端保存信息的技术">Cookie：客户端保存信息的技术</h1><h2 id="cookie原理：">cookie原理：</h2><p>我们想让浏览器记住键值对，向响应头中添加一下头即可:<code>set-Cookie:name=tom;</code><br>浏览器记住之后,向服务器发送键值对,是在请求头中添加下面的信息:<br><code>Cookie: name=tom;</code></p>
+<h2 id="我们如何使用cookie">我们如何使用cookie</h2><p>cookie的使用非常简单~~~</p>
+<p>添加Cookie到浏览器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. 创建一个包含键值对Cookie对象：</span></span><br><span class="line">Cookie cookie = <span class="keyword">new</span> Cookie(<span class="string">"name"</span>,<span class="string">"Tom"</span>);</span><br><span class="line"><span class="comment">//2. 将此对象添加到response响应中：</span></span><br><span class="line">response.addCookie(cookie);</span><br></pre></td></tr></table></figure>
+<p>得到浏览器携带的Cookie：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.得到请求中所有的cookie对象</span></span><br><span class="line">Cookie[] cookies = request.getCookies();</span><br><span class="line"><span class="comment">//2.遍历并判断我们要找的cookie</span></span><br><span class="line"><span class="keyword">if</span>(cookies!=<span class="keyword">null</span> &amp;&amp; cookies.length&gt;<span class="number">0</span>)&#123;</span><br><span class="line">	<span class="keyword">for</span>(Cookie c : cookies)&#123;</span><br><span class="line">			<span class="keyword">if</span>(c.getName().equals(<span class="string">"name"</span>))&#123;</span><br><span class="line">				System.out.println(<span class="string">"获得的cookie:"</span>+c.getName()+<span class="string">":"</span>+c.getValue());</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>搞定，如此简单！！！！</p>
+<h2 id="Cookie使用中需要注意的一些细节">Cookie使用中需要注意的一些细节</h2><p>俗话说，细节决定成败，下面这些细节，才是使用Cookie中的重点和难点。</p>
+<h3 id="Cookie的有效时间">Cookie的有效时间</h3><p>默认有效时间(浏览器记多久?):默认是在会话期间有效.(关闭浏览器,cookie就被删除).(有效时间-1)</p>
+<p>有效时间如何设置?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置cookie的最大有效时间</span></span><br><span class="line"><span class="comment">//1&gt;设置一个正数,标示最大有效时间.单位是秒</span></span><br><span class="line">cookie.setMaxAge(<span class="number">60</span>*<span class="number">60</span>);</span><br><span class="line"><span class="comment">//2&gt;设置为-1 , 就是相当于默认有效时间, 浏览器关闭就消失.</span></span><br><span class="line">cookie.setMaxAge(-<span class="number">1</span>);</span><br><span class="line"><span class="comment">//3&gt; 标示cookie的有效时间为0.发送到浏览器就消失了.</span></span><br><span class="line"><span class="comment">//利用有效时间为0 这件事,我们可以做删除cookie的操作.</span></span><br><span class="line"><span class="comment">// 因为同一个路径 ,不能存在相同的cookie(键相同).</span></span><br><span class="line"><span class="comment">// 我们可以通过覆盖的方式,设置有效时间为0. 删除cookie</span></span><br><span class="line">cookie.setMaxAge(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="Cookie的路径问题">Cookie的路径问题</h3><p>cookie的默认路径就是发送cookie的servlet所在目录.</p>
+<p>例如通过访问<code>http://localhost:8080/demo1/demo2/Aservlet</code>获得的cookie，那么该cookie的默认路径是<code>/demo1/demo2</code>,访问该路径及其子路径都会携带该cookie。如果想修改cookie的影响范围，可以用<code>setPath()</code>方法。</p>
+<h3 id="cookie中的域_(了解)">cookie中的域 (了解)</h3><p>想要以下三个 主机和主机下的项目能共享一个cookie.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">www<span class="class">.baidu</span><span class="class">.com</span></span><br><span class="line">music<span class="class">.baidu</span><span class="class">.com</span></span><br><span class="line">map<span class="class">.baidu</span><span class="class">.com</span></span><br></pre></td></tr></table></figure>
+<p>完成两步即可:</p>
+<ol>
+<li>设置cookie的域为 “.baidu.com”</li>
+<li>设置cookie路径 为: “/“</li>
+</ol>
+<p>以上就是跨主机访问cookie.不常用.</p>
+<h1 id="Session：服务器保存信息的技术">Session：服务器保存信息的技术</h1><h2 id="Session原理">Session原理</h2><p>浏览器第一次访问服务器,服务器会在内存中开辟一个空间(session),并把session对应的ID发送给浏览器.那么下次浏览器再去访问服务器,会把sessionID 交给服务器,服务器通过sessionID 找到刚才开辟的空间.以上就是session的原理.</p>
+<p><img src="http://xinjue.qiniudn.com/github%2F2014%2F10%2Fsession.png" alt="Session原理图"></p>
+<h2 id="Session的使用">Session的使用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1 如何获得session</span></span><br><span class="line">HttpSession session = request.getSession();</span><br><span class="line"><span class="comment">//2 如何操作session</span></span><br><span class="line">session.setAttribute(arg0, arg1)</span><br><span class="line">session.getAttribute(arg0)</span><br><span class="line">session.removeAttribute(arg0)</span><br><span class="line">session.getAttributeNames()</span><br></pre></td></tr></table></figure>
+<h2 id="session细节问题">session细节问题</h2><p> <strong>重点：</strong>服务器让浏览器记住sessionID的cookie 默认过期时间是 (-1)==&gt; 关闭浏览器 cookie就丢失 ==&gt;  cookie丢失 sessionID就丢失 ==&gt; 找不到服务器的session</p>
+<p>session中除了 4个操作 map的方法之外,还有哪些方法？</p>
+<ul>
+<li><code>long getCreationTime()</code> - 获得创建时间</li>
+<li><code>String getId()</code> - 获得sessionID</li>
+<li><code>long getLastAccessedTime()</code> - 获得最后一次访问时间</li>
+<li><code>int  getMaxInactiveInterval()</code> - 获得session的寿命</li>
+<li><code>void setMaxInactiveInterval(int interval)</code> - 设置session的过期时间</li>
+<li><code>void invalidate()</code> - 让session立即失效</li>
+<li><code>boolean isNew()</code> - 判断是不是新建的</li>
+</ul>
+<p>关于设置session的最大有效时间：</p>
+<p>默认是30分钟. ==&gt; 在tomcat的web.xml中 <code>&lt;session-config&gt;</code> 配置的.<br>如何修改session的过期时间?</p>
+<ol>
+<li>修改在tomcat的web.xml中 <code>&lt;session-config&gt;</code> ==&gt; 影响服务器中的所有项目</li>
+<li>在项目的web.xml中 加入<code>&lt;session-config&gt;</code> 配置.==&gt; 影响的是当前项目</li>
+<li>通过<code>setMaxInactiveInterval(int interval)</code>方法设置.==&gt; 当前操作的session</li>
+</ol>
+<h2 id="(了解内容)URL重写">(了解内容)URL重写</h2><p>如果浏览器 禁用cookie功能不能保存任何cookie.那么session技术要是用 cookie来保存sessionID. 没有cookie怎么保存?</p>
+<p>使用url重写解决该问题.</p>
+<p>url重写就是将页面中所有的连接 末尾全都加上 cookieid的参数. 这样用户点击连接访问网站,通过url把SeesionID带到了服务器.这样就解决了.</p>
+<p>但是 互联网行业没有这么干的，安全性低。</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Cookie/">
+                #Cookie
+              </a>
+            
+              <a href="/tags/Session/">
+                #Session
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/10/09/note/Response字符流输出的乱码问题/">
+                Response字符流输出的乱码问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-10-08
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/笔记/">笔记</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>关于在servlet中输出内容的乱码问题</p>
+<p>乱码的产生在于没有沟通。这个沟通是双方的，一方是服务器，一方是客户端。</p>
+<p>服务器写的内容是什么编码？这就需要服务器告诉客户端。</p>
+<p>在tomcat服务器中，有一下几中情况：（中文环境下）</p>
+<p>一、服务器未设置编码,则为默认的<code>ISO-8859-1</code>编码。</p>
+<p>此时：</p>
+<ol>
+<li>服务器告知了客户端，客户端采用相同编码，由于此码表没有中文，会显示<code>????</code></li>
+<li>服务器没有告知客户端，客户端采用GBK解码，同样会出现<code>???</code></li>
+</ol>
+<p>二、服务器设置了编码(支持中文)</p>
+<p>未告知浏览器所采用的编码</p>
+<ol>
+<li>浏览器设置了GBK，由于客户端默认为GBK编码，所以不会出现乱码</li>
+<li>浏览器设置了UTF-8，出现乱码</li>
+</ol>
+<p>告知浏览器所采用的编码</p>
+<p><strong>不会出现乱码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. 只写text/html的话，相当于告知浏览器，浏览器会采用和服务器相同的编码，下面两行是等效的</span></span><br><span class="line">response.setContentType(<span class="string">"text/html"</span>);</span><br><span class="line">response.setHeader(<span class="string">"Content-Type"</span>, <span class="string">"text/html"</span>);</span><br><span class="line"><span class="comment">//2. 服务器设置自己采用的编码</span></span><br><span class="line">response.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br><span class="line"><span class="comment">//3. 下面两行等效，设置编码并告知浏览器</span></span><br><span class="line">response.setHeader(<span class="string">"Content-Type"</span>, <span class="string">"text/html;charset=UTF-8"</span>);</span><br><span class="line">response.setContentType(<span class="string">"text/html;charset=utf-8"</span>);</span><br></pre></td></tr></table></figure>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/乱码/">
+                #乱码
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/10/08/note/Request-and-Response/">
+                Request and Response
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-10-08
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/笔记/">笔记</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h1 id="一、Response：响应">一、Response：响应</h1><p>当客户端向服务器请求时，服务器会响应客户端的请求，将Response发送给客户端。</p>
+<p>理解Response响应，从理解http协议入手。</p>
+<h2 id="响应首行">响应首行</h2><p>http协议的响应首行为：协议/版本号    状态码    状态码描述</p>
+<p>与响应首行对应的方法有：添加状态码和描述</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//只设置状态码</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setStatus</span><span class="params">(<span class="keyword">int</span> sc)</span></span>;</span><br><span class="line"><span class="comment">//设置状态码和描述</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setStatus</span><span class="params">(<span class="keyword">int</span> sc, String sm)</span></span>;</span><br><span class="line"><span class="comment">//只设置错误状态码</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sendError</span><span class="params">(<span class="keyword">int</span> sc)</span></span>;</span><br><span class="line"><span class="comment">//设置错误状态码和描述</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sendError</span><span class="params">(<span class="keyword">int</span> sc, String msg)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="响应头">响应头</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//添加响应头,设置响应头,如果key一样会覆盖</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setHeader</span><span class="params">(String name, String value)</span></span>;</span><br><span class="line">	setIntHeader(String name, <span class="keyword">int</span> value);</span><br><span class="line">	setDateHeader(String name, <span class="keyword">long</span> date;</span><br><span class="line"><span class="comment">//设置响应头,无论如何都新增.</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addHeader</span><span class="params">(String name, String value)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addIntHeader</span><span class="params">(String name, <span class="keyword">int</span> value)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addDateHeader</span><span class="params">(String name, <span class="keyword">long</span> date)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="响应空行(没有对应的方法)">响应空行(没有对应的方法)</h2><h2 id="响应正文">响应正文</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//发送字节流</span></span><br><span class="line">getOutputStream</span><br><span class="line"><span class="comment">//发送字符流</span></span><br><span class="line">getWriter</span><br></pre></td></tr></table></figure>
+<h2 id="response对象中的方法的一些应用">response对象中的方法的一些应用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一句话解决响应的乱码问题</span></span><br><span class="line">response.setContentType(<span class="string">"text/html;charset=utf-8"</span>);</span><br><span class="line"><span class="comment">//手动向浏览器发送404</span></span><br><span class="line">response.sendError(<span class="number">404</span>, <span class="string">"找到也不告诉你!"</span>);</span><br><span class="line"><span class="comment">//重定向</span></span><br><span class="line">response.sendRedirect(<span class="string">"/demo/AServlet"</span>);</span><br><span class="line"><span class="comment">//Refresh头.刷新</span></span><br><span class="line">response.setHeader(<span class="string">"Refresh"</span>, <span class="string">"5;url=/Day08-response/AServlet"</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//发送文件，首先告诉浏览器文件类型</span></span><br><span class="line">response.setContentType(getServletContext().getMimeType(<span class="string">".jar"</span>));</span><br><span class="line"><span class="comment">//告诉浏览器推荐用户使用什么名称下载</span></span><br><span class="line">response.setHeader(<span class="string">"Content-Disposition"</span>, <span class="string">"attachment;filename=ValidateCode.jar"</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="二、request请求">二、request请求</h1><p>request请求对象封装了浏览器发送来的请求信息。我们同样对比http请求协议来探究request对象。</p>
+<h2 id="请求首行：请求方式_请求路径_协议/版本号">请求首行：请求方式 请求路径 协议/版本号</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例如以get方式访问/requestdemo/Aservlet</span></span><br><span class="line"><span class="comment">//获得请求方式:get</span></span><br><span class="line">request.getMethod();</span><br><span class="line"><span class="comment">//获得请求路径:/requestdemo/Aservlet</span></span><br><span class="line">request.getRequestURI();</span><br><span class="line"><span class="comment">//获得访问的Servlet路径:/Aservlet</span></span><br><span class="line">request.getServletPath();</span><br><span class="line"><span class="comment">//获取项目路径:/requestdemo</span></span><br><span class="line">request.getContextPath();</span><br><span class="line">获取请求协议：http</span><br><span class="line">request.getScheme();</span><br></pre></td></tr></table></figure>
+<h2 id="请求头">请求头</h2><p>原始方式获取请求头：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getHeader</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">getDateHeader</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getIntHeader</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function">Enumeration <span class="title">getHeaders</span><span class="params">(String name)</span></span>;</span><br><span class="line"><span class="function">Enumeration <span class="title">getHeaderNames</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p>J2EE封装好的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">request.getContentLength();<span class="comment">// -1</span></span><br><span class="line">request.getContentType();<span class="comment">// null</span></span><br><span class="line">request.getLocale();<span class="comment">// zh_CN</span></span><br><span class="line">request.getQueryString();<span class="comment">// name=tom&amp;age=18</span></span><br><span class="line">request.getRequestURL();<span class="comment">// http://localhost:8080/request/AServlet</span></span><br><span class="line">request.getRemoteAddr();<span class="comment">// 0:0:0:0:0:0:0:1</span></span><br><span class="line">request.getRemoteHost();<span class="comment">// 0:0:0:0:0:0:0:1</span></span><br><span class="line">request.getRemotePort();<span class="comment">// 52074</span></span><br><span class="line">request.getServerName();<span class="comment">// localhost</span></span><br><span class="line">request.getServerPort();<span class="comment">// 8080</span></span><br></pre></td></tr></table></figure>
+<h2 id="请求空行">请求空行</h2><h2 id="请求正文">请求正文</h2><p>请求正文为表单传送过来的键值对</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据键获取值</span></span><br><span class="line">String request.getParameter(String key);</span><br><span class="line"><span class="comment">//获取服务器保存表单参数的容器，即Map&lt;String,String[]&gt;</span></span><br><span class="line"><span class="function">Map <span class="title">getParameterMap</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">//获得所提交的键</span></span><br><span class="line"><span class="function">Enumeration <span class="title">getParameterNames</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">//根据键获得值，此处为一个键对应多个值的情况</span></span><br><span class="line">String[] getParameterValues(String key);</span><br></pre></td></tr></table></figure>
+<p>既然有参数，就会有中文参数，有中文，就会有乱码问题。</p>
+<h3 id="Post方式提交的表单参数中的中文乱码问题">Post方式提交的表单参数中的中文乱码问题</h3><p>Post方式提交的键值对是在请求正文中传过来的，我们只需要知道请求正文的编码，我们用相同的码表进行解码即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//此处假设我们服务器的编码用的UTF-8，则我们需要request的编码也是UTF-8，这样就不会出现乱码</span></span><br><span class="line">request.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br><span class="line">String name = request.getParameter(<span class="string">"name"</span>);</span><br><span class="line"><span class="comment">//注意：一定要在取出参数之前就设置好要使用的编码</span></span><br></pre></td></tr></table></figure>
+<h3 id="Get方式提交的表单参数中的中文乱码问题">Get方式提交的表单参数中的中文乱码问题</h3><p>Get方式提交的内容都存储在URL地址中，如<code>http://localhost:8080/DemoServlet?name=tom&amp;age=18</code>。如果此时有中文，则会出现乱码问题</p>
+<p>这时使用<code>setCharacterEncoding()</code>方法是没用的，因为该方法作用范围是请求正文，无法影响到请求首行。</p>
+<p>通过查询tomcat的文档可知，服务器解析url地址使用的码表是<code>ISO-8859-1</code>，如果不想出现乱码，我们可以采取一下措施</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//得到使用ISO-8859-1解码后的参数</span></span><br><span class="line">String name = request.getParameter(<span class="string">"name"</span>);</span><br><span class="line"><span class="comment">//既然用错了码表解码，我们按原路返回，将它再编码回去</span></span><br><span class="line"><span class="keyword">byte</span>[] nameByte = name.getBytes(<span class="string">"ISO-8859-1"</span>);</span><br><span class="line"><span class="comment">//我们得到了原始数据，再将之用正确的码表解码</span></span><br><span class="line">String newName = <span class="keyword">new</span> String(nameByte,<span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="request的请求转发和包含功能">request的请求转发和包含功能</h2><p><strong>转发：</strong>一个Servlet处理完毕交给下面的servlet(JSP)继续处理。</p>
+<p>作用：在实际开发中，没有servlet转发给servlet的情况，都是由sevlet转发给jsp，这样可以达到分工的作用，servlet负责处理逻辑业务，jsp服务页面展现。</p>
+<p><strong>包含：</strong>两个servlet(jsp)共同向浏览器输出内容</p>
+<p>作用:<br>在现实开发中,多个页面含有相同的内容,我们把相同的内容抽取到一个jsp中,在需要显示这个段内容的jsp中,包含抽取的jsp.可以达到统一管理相同的内容.</p>
+<h2 id="request域的应用">request域的应用</h2><p>所有的域对象，就是一个map集合。request域就是request中的一个map集合。</p>
+<p>在开发中，使用请求转发时，servlet处理完数据，处理结果要交给jsp显示，可以使用request域将处理结果由servlet带给jsp显示</p>
+<p>操作:</p>
+<ol>
+<li>setAttribute  存入一个键值对</li>
+<li>getAttribute  通过键取出值</li>
+<li>getAttributeNames 获得域中所有键</li>
+<li>removeAttribute 跟据键移除一个键值对</li>
+</ol>
+<p>request的范围:</p>
+<p>一个request对象对应一个request域(map).<br>系统当前有多少个request就有多少request域.</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Request/">
+                #Request
+              </a>
+            
+              <a href="/tags/Response/">
+                #Response
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/27/note/Servlet基础/">
+                Servlet基础
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-09-27
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/笔记/">笔记</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>servlet是一个动态资源.</p>
+<h2 id="servlet干什么用的?"><code>servlet</code>干什么用的?</h2><p><code>servlet</code>就是用来处理请求,生成响应.</p>
+<h2 id="我们如何创建一个Servlet?">我们如何创建一个<code>Servlet</code>?</h2><ol>
+<li>实现<code>servlet</code>接口即可.</li>
+<li>继承<code>javax.servlet.GenericServlet</code></li>
+<li>继承<code>javax.servlet.http.HttpServlet</code></li>
+</ol>
+<h2 id="Servlet的声明周期方法"><code>Servlet</code>的声明周期方法</h2><p>生命周期指的是 必须要经历的过程.对于servlet来讲,有3个生命周期方法.</p>
+<ol>
+<li>出生 ==&gt; <code>init</code>方法.在构造方法调用之后 调用.</li>
+<li>使命 ==&gt; <code>service</code>方法 ,当请求发来时,处理请求使用.</li>
+<li>销毁 ==&gt; <code>destory</code>方法, 当服务器关闭时,会销毁<code>servlet</code>,在销毁之前调用该方法释放资源.</li>
+</ol>
+<h2 id="Servlet中的其他方法-"><code>Servlet</code>中的其他方法.</h2><ul>
+<li><code>getServletInfo</code> : 获得<code>servlet</code>的信息(版本,作者,版权..),没用.</li>
+<li><code>getServletConfig</code> : 返回<code>servletConfig</code>对象.</li>
+</ul>
+<h2 id="ServletConfig对象是什么?"><code>ServletConfig</code>对象是什么?</h2><p><code>ServletConfig</code>封装了<code>servlet</code>在<code>web.xml</code>中的配置.</p>
+<p>其中的方法:</p>
+<ol>
+<li><code>getServletName</code>: 获得配置文件中<code>&lt;servlet-name&gt;</code>元素的内容</li>
+<li><p><code>getInitParameter</code>: 根据 <code>&lt;init-param&gt;</code>中的 <code>&lt;param-name&gt;</code> 获得 <code>&lt;/param-value&gt;</code></p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">param-name</span>&gt;</span>name<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">param-value</span>&gt;</span>tom<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>getInitParameterNames</code> 返回所有<code>&lt;param-name&gt;</code> .</p>
+</li>
+<li><code>getServletContext</code>(后面有)</li>
+</ol>
+<h2 id="其他实现server的方式">其他实现server的方式</h2><ul>
+<li>GenericServlet:<ol>
+<li>帮我们妥善的保管ServletConfig对象</li>
+<li>实现了ServletConfig接口 ==&gt; 为调用方便<br>注意: 不要重写servlet接口中的 init方法.  不然 第一步优化就白做了. 我们要做初始化的动作,需要去重写GenericServlet提供的空参init方法.</li>
+</ol>
+</li>
+<li>HTTPServlet:<ol>
+<li>因为我们web项目基于HTTP协议,所以Service方法中传过来的request,response对象都是 基于HTTP协议的. 也就是HttpServletReueqst,也就是HttpServletResponse. 它帮我们进行了强转.</li>
+<li>我们有可能在不同的请求方式时做不同的事情. 根据请求方式不同,调用不同的方法, 例如<ul>
+<li>GET —&gt; doGet()</li>
+<li>POST ==&gt; doPost();</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="Servlet中的其他细节">Servlet中的其他细节</h2><h3 id="关于Servlet线程安全问题!">关于Servlet线程安全问题!</h3><p>因为在servlet运行期间只有一个servlet实例存在.可能会同时处理多个请求.那么我们在servlet中声明成员变量来存储用户数据是有线程安全问题的.我们应该如何解决呢?</p>
+<ul>
+<li>实现SigleThreadModel  (不推荐了!)</li>
+<li>使用局部变量保存用户数据.(推荐使用!)</li>
+</ul>
+<h3 id="关于servlet随着项目的启动而创建">关于servlet随着项目的启动而创建</h3><p>使用<load-on-startup>配置来实现.<br>例如:</load-on-startup></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>AServlet<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>cn.itcast.servlet.hello.AServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">load-on-startup</span>&gt;</span>3<span class="tag">&lt;/<span class="title">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>填写一个整数,整数越小优先级越高.如果优先级一样,启动顺序按照配置顺序.</p>
+<h3 id="关于Servlet路径配置问题详解">关于Servlet路径配置问题详解</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;url-pattern&gt;</span><br><span class="line"> 路径匹配:</span><br><span class="line"><span class="regexp">/AServlet            http:/</span><span class="regexp">/localhost:8080/</span>Day07-servlet/AServlet</span><br><span class="line"><span class="regexp">/ABC/</span>AServlet        <span class="string">http:</span><span class="comment">//localhost:8080/Day07-servlet/ABC/AServlet</span></span><br><span class="line"><span class="regexp">/ABC/</span>ABC<span class="regexp">/AServlet    http:/</span><span class="regexp">/localhost:8080/</span>Day07-servlet<span class="regexp">/ABC/</span>ABC/AServlet</span><br><span class="line"><span class="regexp">/ABC/</span>ABC<span class="comment">/*			 http://localhost:8080/Day07-servlet/ABC/ABC/oasdojasdjioasd</span><br><span class="line"><span class="comment">/*					 http://localhost:8080/Day07-servlet/asdiojoiajsidojoasd</span><br><span class="line">/ 相当于 <span class="comment">/*</span><br><span class="line">后缀名匹配:</span><br><span class="line">*.do ==&gt; struts</span><br><span class="line">*.action ==&gt; struts2</span><br><span class="line">*.html ==&gt;</span></span></span></span><br></pre></td></tr></table></figure>
+<p>注意:</p>
+<ol>
+<li>关于路径,配置的路径匹配范围越大优先级越低.</li>
+<li>两种匹配模式不能混用. 例如错误的例子: /*.do</li>
+</ol>
+<h2 id="关于tomcat的目录下的web-xml配置(了解)">关于tomcat的目录下的web.xml配置(了解)</h2><ol>
+<li>default servlet的配置</li>
+<li>jsp   servlet的配置</li>
+<li><code>&lt;session-config&lt;session-timeout&gt;30&lt;/session-timeout&gt;&lt;/session-config&gt;</code></li>
+<li>互联网中所有mime类型</li>
+<li>欢迎页面配置</li>
+</ol>
+<h2 id="相关对象之_——_ServletContext">相关对象之 —— ServletContext</h2><h3 id="获得：servletConfig-getServletContext()">获得：<code>servletConfig.getServletContext()</code></h3><h3 id="servletContext_的作用">servletContext 的作用</h3><p>1.servletContext 封装了web.xml 中的配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">context-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">param-name</span>&gt;</span>name<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">param-value</span>&gt;</span>jerry<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">context-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">context-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">param-name</span>&gt;</span>password<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">param-value</span>&gt;</span>1234<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">context-param</span>&gt;</span></span><br><span class="line">//获得所有键</span><br><span class="line">getInitParameterNames();</span><br><span class="line">//根据键获得对应的值</span><br><span class="line">getInitParameter(key);</span><br></pre></td></tr></table></figure>
+<p>2.servlet技术中3大域对象之一.</p>
+<p>ServletContext对应着Application(应用)域.利用了一个项目中只有一个ServletContext实例的特点.在servletContext中放置了一个map用作数据通信.这个Map就是所谓域.关于域的操作,有4个.</p>
+<ul>
+<li>放入键值对 setAttribute(key,value)</li>
+<li>通过键取值 getAttribute(key)</li>
+<li>通过键删除 removeAttribute(key)</li>
+<li>遍历所有键 getAttributeNames()</li>
+</ul>
+<p>3.获得项目中资源.</p>
+<p>所有servletContext中关于路径的获得,相对路径都是相对的 WebRoot(项目根)下</p>
+<ul>
+<li><code>getRealPath</code>: 通过相对路径获得绝对路径</li>
+<li><code>getResourceAsStream</code>: 根据相对路径获得指定资源流</li>
+</ul>
+<h3 id="servlet技术中对象的范围">servlet技术中对象的范围</h3><ul>
+<li><code>servlet</code>: 项目启动期间一个servlet只有一个servlet实例</li>
+<li><code>request</code>: 项目启动期间,request对象的数量,要看当前有多少个请求正在处理.</li>
+<li><code>response</code>: 同上.</li>
+<li><code>servletConfig</code>: 一个servlet实例对应一个servletConfig对象</li>
+<li><code>servletContext</code>: 整个项目中,永远只有一个servletContext实例存在.</li>
+</ul>
+<h2 id="路径问题">路径问题</h2><h3 id="如果获得的是包下的,那么太麻烦了-">如果获得的是包下的,那么太麻烦了.</h3><ul>
+<li>一:使用getClass().getResourceAsStream方法,相对路径分为两种情况<ol>
+<li>加”/“: 相对的是classes目录</li>
+<li>不加”/“: 相对的是本类当前目录<br><code>InputStream is = this.getClass().getResourceAsStream(&quot;students.xml&quot;);</code><br><code>System.out.println(is);</code></li>
+</ol>
+</li>
+<li>二:使用this.getClass().getClassLoader().getResourceAsStream(“”);获得<br>  只有一个相对路径 ==&gt; 就是相对于 classes目录<br>  <code>InputStream is2 = this.getClass().getClassLoader().getResourceAsStream(&quot;students.xml&quot;);</code><br>  <code>System.out.println(is2);</code></li>
+</ul>
+<p>注意: 使用类和类加载器加载资源文件时</p>
+<p>jvm运行期间只加载一次. 但是使用下面的代码可以解决这个问题.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String path = <span class="keyword">this</span>.getClass().getClassLoader().getResource(<span class="string">"students.xml"</span>).getPath();</span><br><span class="line">File file = <span class="keyword">new</span> File(path.substring(<span class="number">1</span>, path.length()));</span><br><span class="line">System.out.println(path);</span><br></pre></td></tr></table></figure>
+<p>getClassLoader()原本是用来加载.class文件的, 所以缓存设计的很小.不要用他加载一些别较大的资源.</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/servlet/">
+                #servlet
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/24/note/http协议/">
+                http协议
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-09-24
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/笔记/">笔记</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="概念">概念</h2><p>HTTP（hypertext transport protocol），即超文本传输协议。这个协议详细规定了浏览器和万维网服务器之间互相通信的规则。<br>HTTP就是一个通信规则，通信规则规定了客户端发送给服务器的内容格式，也规定了服务器发送给客户端的内容格式。其实我们要学习的就是这个两个格式！客户端发送给服务器的格式叫“请求协议”；服务器发送给客户端的格式叫“响应协议”。</p>
+<h2 id="URL/URI">URL/URI</h2><ul>
+<li>URL：统一资源定位符，就是一个网址，例如：<code>http://www.itcast.cn</code>就是一个URL。<code>/hello/index.html</code>也是一个URL，URL必须是一个真实存在的网址。</li>
+<li>URI：统一资源标识符：比URI包含了URL，URI的范围更加宽泛，URI可以是一个不存在的网址。在网络上用来标签资源的都是URI，例如<code>zhangSan@163.com</code>也是URI。</li>
+</ul>
+<h2 id="请求协议">请求协议</h2><h3 id="格式">格式</h3><p>请求协议的格式分为四部分，分别是：</p>
+<ol>
+<li>请求首行；</li>
+<li>请求头信息；</li>
+<li>空行；</li>
+<li>请求正文。</li>
+</ol>
+<h3 id="Get请求">Get请求</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET /hello/index.jsp?keyword=hello HTTP/<span class="number">1.1</span></span><br><span class="line">Host: localhost</span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">5.1</span>; rv:<span class="number">5.0</span>) Gecko/<span class="number">20100101</span> Firefox/<span class="number">5.0</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,*/*;q=<span class="number">0.8</span></span><br><span class="line">Accept-Language: zh-cn,zh;q=<span class="number">0.5</span></span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Charset: GB2312,utf-<span class="number">8</span>;q=<span class="number">0.7</span>,*;q=<span class="number">0.7</span></span><br><span class="line">Connection: keep-alive</span><br><span class="line">Cookie: JSESSIONID=<span class="number">369766</span>FDF6220F7803433C0B2DE36D98</span><br></pre></td></tr></table></figure>
+<h3 id="Post_请求">Post 请求</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST /hello/index.jsp HTTP/<span class="number">1.1</span></span><br><span class="line">Accept: image/gif, image/jpeg, image/pjpeg, image/pjpeg, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/x-ms-application, application/x-ms-xbap, application/vnd.ms-xpsdocument, application/xaml+xml, */*</span><br><span class="line">Referer: http://localhost:<span class="number">8080</span>/hello/index.jsp</span><br><span class="line">Accept-Language: zh-cn,en-US;q=<span class="number">0.5</span></span><br><span class="line">User-Agent: Mozilla/<span class="number">4.0</span> (compatible; MSIE <span class="number">7.0</span>; Windows NT <span class="number">5.1</span>; Trident/<span class="number">4.0</span>; InfoPath.<span class="number">2</span>; .NET CLR <span class="number">2.0</span>.<span class="number">50727</span>; .NET CLR <span class="number">3.0</span>.<span class="number">4506.2152</span>; .NET CLR <span class="number">3.5</span>.<span class="number">30729</span>)</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Host: localhost:<span class="number">8080</span></span><br><span class="line">Content-Length: <span class="number">13</span></span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">Cache-Control: no-cache</span><br><span class="line">Cookie: JSESSIONID=E365D980343B9307023A1D271CC48E7D</span><br><span class="line"></span><br><span class="line">keyword=hello</span><br></pre></td></tr></table></figure>
+<h3 id="请求头">请求头</h3><ul>
+<li><code>keyword=hello</code>：请求体内容！hello是在表单中输入的数据，keyword是表单字段的名字。</li>
+<li><code>Content-Type:application/x-www-form-urlencoded</code>：表单的数据类型，说明会使用url格式编码数据；url编码的数据都是以“%”为前缀，后面跟随两位的16进制，例如“传智”这两个字使用UTF-8的url编码用为“%E4%BC%A0%E6%99%BA”；</li>
+<li><code>Referer:http://localhost:8080/hello/index.jsp</code>：请求来自哪个页面，例如你在百度上点击链接到了这里，那么<code>Referer:http://www.baidu.com</code>；如果你是在浏览器的地址栏中直接输入的地址，那么就没有Referer这个请求头了；</li>
+<li><strong><code>Cookie: JSESSIONID=369766FDF6220F7803433C0B2DE36D98</code></strong>：因为不是第一次访问这个地址，所以会在请求中把上一次服务器响应中发送过来的Cookie在请求中一并发送去过；这个Cookie的名字为JSESSIONID，然后在讲会话是讲究它！</li>
+<li><code>Connection: keep-alive</code>：客户端支持的链接方式，保持一段时间链接，默认为3000ms；</li>
+<li><code>Accept-Charset: GB2312,utf-8;q=0.7,*;q=0.7</code>：客户端支持的编码；</li>
+<li><code>Content-Length:13</code>：请求体的长度，这里表示13个字节。</li>
+<li><code>Accept-Encoding: gzip, deflate</code>：支持的压缩格式。数据在网络上传递时，可能服务器会把数据压缩后再发送；</li>
+<li><code>Accept-Language: zh-cn;q=0.5</code>：当前客户端支持的语言，可以在浏览器的工具选项中找到语言相关信息；</li>
+<li><strong><code>User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0</code></strong>：与浏览器和OS相关的信息。有些网站会显示用户的系统版本和浏览器版本信息，这都是通过获取User-Agent头信息而来的；</li>
+<li><code>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</code>：告诉服务器，当前客户端可以接收的文档类型，其实这里包含了<em>/</em>，就表示什么都可以接收；</li>
+<li><code>GET /hello/index.jsp HTTP/1.1</code>：GET请求，请求服务器路径为/hello/index.jsp，协议为1.1；</li>
+<li><strong><code>Host:localhost</code></strong>：请求的主机名为localhost；</li>
+</ul>
+<h2 id="响应协议">响应协议</h2><h3 id="格式-1">格式</h3><p>响应协议格式也是分为四个部分：</p>
+<ol>
+<li>响应首行；</li>
+<li>响应头信息；</li>
+<li>响应空行；</li>
+<li>响应正文。</li>
+</ol>
+<h3 id="响应内容">响应内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">Server: Apache-Coyote/<span class="number">1.1</span></span><br><span class="line">Content-Type: text/html;charset=UTF-<span class="number">8</span></span><br><span class="line">Content-Length: <span class="number">724</span></span><br><span class="line">Set-Cookie: JSESSIONID=C97E2B4C55553EAB46079A4F263435A4; Path=/hello</span><br><span class="line">Date: Wed, <span class="number">25</span> Sep <span class="number">2012</span> <span class="number">04</span>:<span class="number">15</span>:<span class="number">03</span> GMT</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC <span class="string">"-//W3C//DTD HTML 4.01 Transitional//EN"</span>&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;base href=<span class="string">"http://localhost:8080/hello/"</span>&gt;</span><br><span class="line">......</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="响应头">响应头</h3><ul>
+<li><code>HTTP/1.1 200 OK</code>：响应协议为HTTP1.1，状态码为200，表示请求成功，OK是对状态码的解释；</li>
+<li><code>Server: Apache-Coyote/1.1</code>：服务器的版本信息；</li>
+<li><strong><code>Content-Type: text/html;charset=UTF-8</code></strong>：响应体使用的编码为UTF-8；</li>
+<li><code>Content-Length: 724</code>：响应体为724字节；</li>
+<li><code>Set-Cookie: JSESSIONID=C97E2B4C55553EAB46079A4F263435A4; Path=/hello</code>：响应给客户端的Cookie；</li>
+<li><code>Date: Wed, 25 Sep 2012 04:15:03 GMT</code>：响应的时间，这可能会有8小时的时区差；</li>
+<li>禁止浏览器缓存当前请求页面(三种).<ol>
+<li><code>Expires: -1</code>；</li>
+<li><code>Cache-Control: no-cache</code>；</li>
+<li><code>Pragma: no-cache</code>；</li>
+</ol>
+</li>
+<li><code>Refresh: 3;url=http://www.itcast.cn</code> 自动刷新响应头,3秒后刷新页面,刷新到www.itcast.cn</li>
+</ul>
+<h3 id="状态码">状态码</h3><ul>
+<li>200：请求成功，浏览器会把响应体内容（通常是html）显示在浏览器中；</li>
+<li>404：请求的资源没有找到，说明客户端错误的请求了不存在的资源；</li>
+<li>500：请求资源找到了，但服务器内部出现了错误；</li>
+<li>302：重定向，当响应码为302时，表示服务器要求浏览器重新再发一个请求，服务器会发送一个响应头Location，它指定了新请求的URL地址；</li>
+<li>304：当用户第一次请求<code>index.html</code>时，服务器会添加一个名为<code>Last-Modified</code>响应头，这个头说明了<code>index.html</code>的最后修改时间，浏览器会把<code>index.html</code>内容，以及最后响应时间缓存下来。当用户第二次请求<code>index.html</code>时，在请求中包含一个名为<code>If-Modified-Since</code>请求头，它的值就是第一次请求时服务器通过<code>Last-Modified</code>响应头发送给浏览器的值，即<code>index.html</code>最后的修改时间，<code>If-Modified-Since</code>请求头就是在告诉服务器，我这里浏览器缓存的<code>index.html</code>最后修改时间是这个，您看看现在的<code>index.html</code>最后修改时间是不是这个，如果还是，那么您就不用再响应这个<code>index.html</code>内容了，我会把缓存的内容直接显示出来。而服务器端会获取<code>If-Modified-Since</code>值，与<code>index.html</code>的当前最后修改时间比对，如果相同，服务器会发响应码<code>304</code>，表示<code>index.html</code>与浏览器上次缓存的相同，无需再次发送，浏览器可以显示自己的缓存页面，如果比对不同，那么说明<code>index.html</code>已经做了修改，服务器会响应<code>200</code>。(如下图)</li>
+</ul>
+<p><img src="http://xinjue.qiniudn.com/hmnote%2F09%2Fhttp304.jpg" alt="304"></p>
+<h3 id="使用HTML来模拟一些相应头">使用HTML来模拟一些相应头</h3><p>自动刷新响应头</p>
+<ul>
+<li>响应头：<code>Refresh: 3;url=http://www.itcast.cn</code></li>
+<li>HTML：<code>&lt;meta http-equiv=&quot;Refresh&quot; content=&quot;3;url=http://www.itcast.cn&quot;&gt;</code></li>
+</ul>
+<p>通知浏览器页面编码</p>
+<ul>
+<li>响应头：<code>Content-Type: text/html;charset=UTF-8</code></li>
+<li>HTML：<code>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</code></li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/http协议/">
+                #http协议
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/23/note/DOM4J/">
+                xml解析方式&DOM4J
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-09-23
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/笔记/">笔记</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>xml解析方式&amp;DOM4J</p>
+<hr>
+<h2 id="xml的解析方式">xml的解析方式</h2><p>xml解析方式主要有两种，一种是dom解析，一种是sax解析。</p>
+<h3 id="Dom解析">Dom解析</h3><p>将文档中所有内容都封装成对象.读取时,将所有对象都加载到内存中.在内存中创建一颗dom数(记录对象间的关系).</p>
+<ul>
+<li>优点: 方便的进行增删改查.</li>
+<li>缺点: 会非常消耗内存.</li>
+</ul>
+<p>把所有内容封装成了5类对象.</p>
+<ol>
+<li>document</li>
+<li>Element</li>
+<li>Attribute</li>
+<li>Text</li>
+<li>Commons</li>
+</ol>
+<p>共同的父类：node</p>
+<p>NOde的属性:</p>
+<ul>
+<li>自身属性:<ol>
+<li>nodeType</li>
+<li>nodeName</li>
+<li>nodeValue</li>
+</ol>
+</li>
+<li>导航属性<ol>
+<li>找子节点的:firstChild lastChild childNodes</li>
+<li>找父节点的:parentNode</li>
+<li>找兄弟节点:nextSibling previousSibling</li>
+</ol>
+</li>
+<li>获得Element的方式<ol>
+<li>getElementById           ==&gt; Document</li>
+<li>getELementsByTagName     ==&gt; Document/Element</li>
+<li>getELementsByClassName   ==&gt; Document/Element</li>
+<li>getElementsByName        ==&gt; Document</li>
+</ol>
+</li>
+<li>对于增删改的操作:<ol>
+<li>创建一个元素: document.createElement</li>
+<li>添加一个元素: element.appendChild ,element.insertBefore</li>
+<li>替换一个元素: element.replaceChild</li>
+<li>删除一个元素: element.removeChild</li>
+</ol>
+</li>
+</ul>
+<h3 id="Sax_解析">Sax 解析</h3><p>sax:事件驱动的.与pull解析类似.把xml文档的 读取过程,划分出5类事件.我们只要提供遇到每类事件做什么的锦囊即可.</p>
+<ul>
+<li>优点:内存占用小.</li>
+<li>缺点: 不能进行增删改的操作.</li>
+</ul>
+<p>sax读取过程中的5类事件，</p>
+<ol>
+<li>startDocument</li>
+<li>startElement</li>
+<li>characters</li>
+<li>endElement</li>
+<li>endDocument</li>
+</ol>
+<p>根据业务自定义一个handler覆写上面五个方法，就可以读取xml文档了</p>
+<h2 id="dom4j">dom4j</h2><p>dom4j是一个简单的框架，简单易用，而且效率高<br>官方文档及其简便，以至于根本就不用学~~~~</p>
+<p>dom4j读取xml文档的步骤：</p>
+<ul>
+<li>创建SAXReader，读取xml文件(由此可以看出dom4j采用的是sax解析方式进行读取),返回一个document对象</li>
+<li>在document中得到目标Element对象</li>
+<li>dosomething</li>
+<li>将改变的xml文档写回到文件中</li>
+</ul>
+<p>这里就懒一下，直接贴文档的例子了：</p>
+<h3 id="解析xml">解析xml</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.dom4j.Document;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.DocumentException;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.SAXReader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Document <span class="title">parse</span><span class="params">(URL url)</span> <span class="keyword">throws</span> DocumentException </span>&#123;</span><br><span class="line">        SAXReader reader = <span class="keyword">new</span> SAXReader();</span><br><span class="line">        Document document = reader.read(url);</span><br><span class="line">        <span class="keyword">return</span> document;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="迭代">迭代</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bar</span><span class="params">(Document document)</span> <span class="keyword">throws</span> DocumentException </span>&#123;</span><br><span class="line"></span><br><span class="line">  Element root = document.getRootElement();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// iterate through child elements of root</span></span><br><span class="line">  <span class="keyword">for</span> ( Iterator i = root.elementIterator(); i.hasNext(); ) &#123;</span><br><span class="line">      Element element = (Element) i.next();</span><br><span class="line">      <span class="comment">// do something</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// iterate through child elements of root with element name "foo"</span></span><br><span class="line">  <span class="keyword">for</span> ( Iterator i = root.elementIterator( <span class="string">"foo"</span> ); i.hasNext(); ) &#123;</span><br><span class="line">      Element foo = (Element) i.next();</span><br><span class="line">      <span class="comment">// do something</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// iterate through attributes of root</span></span><br><span class="line">  <span class="keyword">for</span> ( Iterator i = root.attributeIterator(); i.hasNext(); ) &#123;</span><br><span class="line">      Attribute attribute = (Attribute) i.next();</span><br><span class="line">      <span class="comment">// do something</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="快速循环：递归">快速循环：递归</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">treeWalk</span><span class="params">(Document document)</span> </span>&#123;</span><br><span class="line">    treeWalk( document.getRootElement() );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">treeWalk</span><span class="params">(Element element)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> ( <span class="keyword">int</span> i = <span class="number">0</span>, size = element.nodeCount(); i &lt; size; i++ ) &#123;</span><br><span class="line">        Node node = element.node(i);</span><br><span class="line">        <span class="keyword">if</span> ( node <span class="keyword">instanceof</span> Element ) &#123;</span><br><span class="line">            treeWalk( (Element) node );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// do something....</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="新建一个xml文档">新建一个xml文档</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.dom4j.Document;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.DocumentHelper;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.Element;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Document <span class="title">createDocument</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Document document = DocumentHelper.createDocument();</span><br><span class="line">        Element root = document.addElement( <span class="string">"root"</span> );</span><br><span class="line"></span><br><span class="line">        Element author1 = root.addElement( <span class="string">"author"</span> )</span><br><span class="line">            .addAttribute( <span class="string">"name"</span>, <span class="string">"James"</span> )</span><br><span class="line">            .addAttribute( <span class="string">"location"</span>, <span class="string">"UK"</span> )</span><br><span class="line">            .addText( <span class="string">"James Strachan"</span> );</span><br><span class="line">        Element author2 = root.addElement( <span class="string">"author"</span> )</span><br><span class="line">            .addAttribute( <span class="string">"name"</span>, <span class="string">"Bob"</span> )</span><br><span class="line">            .addAttribute( <span class="string">"location"</span>, <span class="string">"US"</span> )</span><br><span class="line">            .addText( <span class="string">"Bob McWhirter"</span> );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> document;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="将document写入文件">将document写入文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//A quick and easy way to write a Document (or any Node) to a Writer is via the write() method.</span></span><br><span class="line"></span><br><span class="line">  FileWriter out = <span class="keyword">new</span> FileWriter( <span class="string">"foo.xml"</span> );</span><br><span class="line">  document.write( out );</span><br><span class="line"><span class="comment">//利用OutputFormat来输出pretty格式</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.dom4j.Document;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.OutputFormat;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.XMLWriter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(Document document)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// lets write to a file</span></span><br><span class="line">        XMLWriter writer = <span class="keyword">new</span> XMLWriter(</span><br><span class="line">            <span class="keyword">new</span> FileWriter( <span class="string">"output.xml"</span> )</span><br><span class="line">        );</span><br><span class="line">        writer.write( document );</span><br><span class="line">        writer.close();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// Pretty print the document to System.out</span></span><br><span class="line">        OutputFormat format = OutputFormat.createPrettyPrint();</span><br><span class="line">        writer = <span class="keyword">new</span> XMLWriter( System.out, format );</span><br><span class="line">        writer.write( document );</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Compact format to System.out</span></span><br><span class="line">        format = OutputFormat.createCompactFormat();</span><br><span class="line">        writer = <span class="keyword">new</span> XMLWriter( System.out, format );</span><br><span class="line">        writer.write( document );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="xml和String互相转换">xml和String互相转换</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//转换成String</span></span><br><span class="line">Document document = ...;</span><br><span class="line">String text = document.asXML();</span><br><span class="line"></span><br><span class="line"><span class="comment">//String转换成xml</span></span><br><span class="line">String text = <span class="string">"&lt;person&gt; &lt;name&gt;James&lt;/name&gt; &lt;/person&gt;"</span>;</span><br><span class="line">Document document = DocumentHelper.parseText(text);</span><br></pre></td></tr></table></figure>
+<h3 id="如何用XPath进行查找">如何用XPath进行查找</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bar</span><span class="params">(Document document)</span> </span>&#123;</span><br><span class="line">  List list = document.selectNodes( <span class="string">"//foo/bar"</span> );</span><br><span class="line"></span><br><span class="line">  Node node = document.selectSingleNode( <span class="string">"//foo/bar/author"</span> );</span><br><span class="line"></span><br><span class="line">  String name = node.valueOf( <span class="string">"@name"</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>xPath匹配规则：</p>
+<ul>
+<li>/AAA/bbb: 一个斜杠类似于window中的路径的感觉, 绝对路径</li>
+<li>//AAA: 如果路径以双斜线 // 开头, 则表示选择文档中所有满足双斜线//之后规则的元素(无论层级关系)</li>
+<li>/AAA/CCC/DDD/<em>：星号 </em> 表示选择所有由星号之前的路径所定位的元素</li>
+<li>/AAA/BBB[1]：方块号里的表达式可以进一步的指定元素, 其中数字表示元素在选择集里的位置, 而last()函数则表示选择集中的最后一个元素</li>
+<li>//@id: @表示选择拥有id属性的元素</li>
+<li>//BBB[@id=’b1’]：属性的值可以被用来作为选择的准则, normalize-space函数删除了前部和尾部的空格, 并且把连续的空格串替换为一个单一的空格</li>
+</ul>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/dom4j/">
+                #dom4j
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/21/note/案例和xml/">
+                案例和xml
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-09-21
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/笔记/">笔记</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>有一个问题，还未想明白：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在表单的submit中调用onsubmite="return check();"</span></span><br><span class="line"><span class="comment">// 在check方法中，要进行多项验证，包括用户名、密码、年龄、学历等</span></span><br><span class="line"><span class="comment">// 只有所有的验证都通过，check方法才返回true，否则就返回false</span></span><br><span class="line"><span class="comment">// W3School文档中如此介绍：</span></span><br><span class="line"><span class="comment">//		如果 onsubmit 句柄返回 fasle，表单的元素就不会提交。如果该函数返回其他值或什么都没有返回，则表单会被提交。</span></span><br><span class="line"><span class="comment">// 此时采用如下方式编写check</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">var</span> b = checkEdu &amp; checkPassword &amp; checkAge &amp; checkRePassword &amp; checkHabit &amp; checkUserName;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Boolean</span>(b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 逻辑上应该没有问题，但是在实际应用中，不管check的返回值是true或者false，表单都会被提交</span></span><br><span class="line"><span class="comment">// 这是个问题。。。</span></span><br></pre></td></tr></table></figure>
+<p>我的问题得到了解决：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &amp;运算是一元运算符，boolean值通过&amp;运算得到0或者1</span></span><br><span class="line"><span class="keyword">var</span> b = checkEdu &amp; checkPassword &amp; checkAge &amp; checkRePassword &amp; checkHabit &amp; checkUserName;</span><br><span class="line"><span class="comment">// 通过得到的0或者1，构建一个Boolean值</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Boolean</span>(b);</span><br><span class="line"><span class="comment">//问题就出在这里，虽然我们知道new Boolean(b)是一个布尔型，但是浏览器判断是只认准基本数据类型，不认扩展的包装类型，所以此处只需做如下修改即可</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Boolean</span>(b).valueOf();</span><br><span class="line"><span class="comment">// 问题解决</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/XML/">
+                #XML
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/19/note/js&DOM(二)/">
+                js&DOM(二)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-09-19
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/笔记/">笔记</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>js&amp;DOM(二)</p>
+<p>今天继续学习js基础，完成后接着学习了BOM和DOM基础。</p>
+<p>个人认为需要记忆的知识点：</p>
+<h2 id="1-_window对象">1. window对象</h2><p>一个html就是一个window对象。</p>
+<p>window对象封装的属性和方法：</p>
+<p>alert，prompt，confirm，open，setInterval，clearInterval，setTimeout，clearTimeout等</p>
+<blockquote>
+<p>setInterval和setTimeout给人懂得感觉是多线程操作，但是事实上它还是单线程。浏览器只会为js代码开辟一个线程。</p>
+</blockquote>
+<p><strong>可以通过window对象得到Location，Document，Navigator，History对象</strong></p>
+<p>其中Document对象是重点</p>
+<h2 id="2-_DOM(Document_Object_Model)—-重点">2. DOM(Document Object Model)—-重点</h2><p>一张图搞定知识点：(红色的是重点中的重点)<br>点击查看大图</p>
+<p><img src="http://xinjue.qiniudn.com/hmnote%2F09%2Fdom%E4%BD%93%E7%B3%BB.png" alt="DOM知识框架"></p>
+<h2 id="3-_各种小例子">3. 各种小例子</h2><p>各种小例子整体来说略简单，主要有三个个知识点需要注意一下：</p>
+<h3 id="json数据的读取">json数据的读取</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取到key并且通过key获取value</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> json)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"key:"</span>+key+<span class="string">",value: "</span>+ json[key]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="select标签">select标签</h3><p>在list2Other的例子里，得到左侧option，将之添加到右侧select中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">go</span><span class="params">(from, target)</span></span>&#123;</span><br><span class="line">	<span class="keyword">var</span> options = from.options;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;options.length; i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(options[i].selected)&#123;</span><br><span class="line">			<span class="comment">//直接将选中的option添加到目标select中</span></span><br><span class="line">			<span class="comment">//注意：此处不需要在原select中删除该option</span></span><br><span class="line">			target.appendChild(options[i]);</span><br><span class="line">			i--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="(重点)如何查阅DHTML文档">(重点)如何查阅DHTML文档</h3><p>通过练习例子，可以感受到DHTML的精髓，能封装的就封装，能简单就简单。</p>
+<p>查看DHTML文档，按照  对象—&gt;属性，方法，事件，集合   的顺序。</p>
+<p>所以在操作元素，或者其方法和属性的时候，要先想一想看一看DHTML是不是已经帮我们封装好了，查看其属性，方法如何使用，从而省去我们繁琐的DOM操作。</p>
+<h3 id="附：代码">附：代码</h3><p><a href="http://xinjue.qiniudn.com/hmnote%2F09%2F%E4%BE%8B%E5%AD%90.zip" target="_blank" rel="external">小例子的代码</a></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/js-DOM/">
+                #js&DOM
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/18/note/js基础&DOM(一)/">
+                js基础&DOM(一)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-09-18
+          
+        </span>
+
+        
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分類於
+              
+                <a href="/categories/笔记/">笔记</a>
+
+                
+                
+
+              
+            </span>
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <p>js基础&amp;DOM</p>
+<hr>
+<h1 id="JavaScript">JavaScript</h1><h2 id="1-_Js的历史">1. Js的历史</h2><p>js是面向对象的语言：</p>
+<pre><code><span class="bullet">1. </span>封装
+<span class="bullet">2. </span>继承
+<span class="bullet">3. </span>多态
+<span class="bullet">4. </span>聚集 -&gt; 对象中具有引用其它对象的能力
+</code></pre><h2 id="2-_Js的引入">2. Js的引入</h2><ol>
+<li>在script标签内书写，此时标签可以在html文档的任意位置(位置越靠前，越早执行)</li>
+<li>在script标签中引用。</li>
+</ol>
+<h2 id="3-_Js的基本语法">3. Js的基本语法</h2><p>基本和java一样，需注意以下几点：</p>
+<ul>
+<li>所有类型的变量都用<code>var</code>来声明。</li>
+<li>声明变量甚至可以不实用<code>var</code>，区别是不用<code>var</code>声明的就是全局变量。</li>
+</ul>
+<h2 id="4-_Js的类型">4. Js的类型</h2><p>也和java类似：分为原始数据类型和对象数据类型</p>
+<p>原始数据类型：</p>
+<ul>
+<li>number：整形，浮点型</li>
+<li>string：js的突破，将string定义为原始类型，并且没有char类型</li>
+<li>boolean</li>
+<li>null：用来表示引用数据类型的占位符（通常认为设定）</li>
+<li>undefined：由null衍生，表示<ol>
+<li>没有该变量初始化值，系统默认赋值为undefined</li>
+<li>方法中没有返回值，默认返回undefined</li>
+</ol>
+</li>
+</ul>
+<p><code>typeof</code>运算符：判断一个值是否在某种类型的范围内</p>
+<p>对变量或值调用 typeof 运算符将返回下列值之一：</p>
+<ul>
+<li>undefined - 如果变量是 Undefined 类型的</li>
+<li>boolean - 如果变量是 Boolean 类型的</li>
+<li>number - 如果变量是 Number 类型的</li>
+<li>string - 如果变量是 String 类型的</li>
+<li>object - 如果变量是一种引用类型或 Null 类型的</li>
+</ul>
+<blockquote>
+<p>注释：您也许会问，为什么 typeof 运算符对于 null 值会返回 “Object”。这实际上是 JavaScript 最初实现中的一个错误，然后被 ECMAScript 沿用了。现在，null 被认为是对象的占位符，从而解释了这一矛盾，但从技术上来说，它仍然是原始值。</p>
+</blockquote>
+<h2 id="5-_Js中的语句">5. Js中的语句</h2><p>基本和java相同。</p>
+<h2 id="6-_Js中的运算符">6. Js中的运算符</h2><p>大部分和java中一样，挑几个不一样的记录一下</p>
+<h3 id="一元加减法">一元加减法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//表示正负号~~~</span></span><br><span class="line"><span class="keyword">var</span> a = +<span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = -<span class="number">1</span>;</span><br><span class="line"><span class="comment">//高级应用，涉及类型转换</span></span><br><span class="line"><span class="keyword">var</span> c = +<span class="string">"1"</span>; <span class="comment">//字符串转换为数字</span></span><br><span class="line"><span class="keyword">var</span> d = +<span class="string">"abc"</span>; <span class="comment">//字符串转换为数字，转换失败，返回NaN</span></span><br></pre></td></tr></table></figure>
+<h3 id="Boolean_运算符_!_&amp;&amp;_||">Boolean 运算符 ! &amp;&amp; ||</h3><p>如遇到if(1||”abc”||null||undefined)等，这里涉及到类型转换：自动转换规则</p>
+<ul>
+<li>string：””转换为false，其它为true</li>
+<li>number：除了NaN，+0，-0，其它都为true</li>
+<li>null：false</li>
+<li>undefined：false</li>
+</ul>
+<p>NaN特性：凡是NaN参与的boolean运算返回值都是false，除了 !=</p>
+<p>undefined是null衍生出来的，所以 undefined == null 返回 true</p>
+<h3 id="比较运算符">比较运算符</h3><p><strong>当运算符两端一端是数字，一端是其它类型是，其它类型都向数字类型转换</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">11</span> &gt; <span class="number">3</span></span><br><span class="line"><span class="string">"11"</span> &gt; <span class="number">3</span></span><br><span class="line"><span class="number">11</span> &gt; <span class="string">"3"</span></span><br><span class="line">上面结果都为<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p><strong>当运算符两端都是字符串时</strong></p>
+<p>比较规则：比较首字母的ASC码，若相同，则比较下一位。。。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"11"</span> &gt; <span class="string">"3"</span> <span class="comment">//false</span></span><br><span class="line"><span class="string">"11"</span> &gt; <span class="string">"1"</span> <span class="comment">//true</span></span><br><span class="line"><span class="string">"abc"</span> &gt; <span class="number">11</span> <span class="comment">//false:"abc"转换成数字，为NaN，和任何类型运算都是false</span></span><br></pre></td></tr></table></figure>
+<h2 id="ECMA对象分类">ECMA对象分类</h2><h3 id="本地对象_native_object">本地对象 native object</h3><ul>
+<li>Object：是所有对象的超类。(toString,valueOf等方法)</li>
+<li>Function</li>
+<li>原始类型包装对象：Number，Boolean，String</li>
+<li>Array：数组(js中数组内可以是任何类型，数组可以使任意长度且长度可变)</li>
+<li>Date：时间</li>
+<li>内建对象：<ol>
+<li>Global：编码(encodingURI,decodingURI等)，isNaN，parseInt，parseFloat</li>
+<li>Math：random，round等</li>
+</ol>
+</li>
+</ul>
+<h3 id="主机对象_host_object">主机对象 host object</h3><p>包含BOM和DOM</p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/js-DOM/">
+                #js&DOM
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/09/04/7k面试之银行调度/">
+                7k面试之银行调度
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-09-04
+          
+        </span>
+
+        
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          
+            <h2 id="需求">需求</h2><p>模拟实现银行业务调度系统逻辑，具体需求如下：</p>
+<ul>
+<li>银行内有6个业务窗口，1 - 4号窗口为普通窗口，5号窗口为快速窗口，6号窗口为VIP窗口。</li>
+<li>有三种对应类型的客户：VIP客户，普通客户，快速客户（办理如交水电费、电话费之类业务的客户）。</li>
+<li>异步随机生成各种类型的客户，生成各类型用户的概率比例为：</li>
+<li>VIP客户 ：普通客户 ：快速客户  =  1 ：6 ：3。</li>
+<li>客户办理业务所需时间有最大值和最小值，在该范围内随机设定每个VIP客户以及普通客户办理业务所需的时间，快速客户办理业务所需时间为最小值（提示：办理业务的过程可通过线程Sleep的方式模拟）。</li>
+<li>各类型客户在其对应窗口按顺序依次办理业务。 </li>
+<li>当VIP（6号）窗口和快速业务（5号）窗口没有客户等待办理业务的时候，这两个窗口可以处理普通客户的业务，而一旦有对应的客户等待办理业务的时候，则优先处理对应客户的业务。</li>
+<li>随机生成客户时间间隔以及业务办理时间最大值和最小值自定，可以设置。</li>
+<li>不要求实现GUI，只考虑系统逻辑实现，可通过Log方式展现程序运行结果。</li>
+</ul>
+<h2 id="初步分析">初步分析</h2><p>拿到要求，第一步必须是分析需求。</p>
+<p>这里继续用张老师的图</p>
+<p><img src="http://xinjue.qiniudn.com/github%2F201409%2Fbank.jpg" alt="类图分析"></p>
+<ol>
+<li>每个客户都有一个号，每次办理业务都会叫号。因此需要一个号码类，类中有一个生成号码的方法和一个获取即将要服务的号码</li>
+<li>客户有三类，分别是普通，快速和VIP客户，可以用枚举来表示其类型。</li>
+<li>需要一个叫号器，根据客户类型来分配号码</li>
+<li>各类型客户在其相应窗口被叫号，办理业务。并模拟办理业务的时间。当窗口空闲时，可以向下兼容办业务。</li>
+</ol>
+<h2 id="编码">编码</h2><h3 id="NumberManager类">NumberManager类</h3><ul>
+<li>定义一个用于存储上一个客户号码的成员变量和用于存储所有等待服务的客户号码的队列集合。</li>
+<li>定义一个产生新号码的方法和获取马上要为之服务的号码的方法，这两个方法被不同的线程操作了相同的数据，所以，要进行同步。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xinjue.BankQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NumberManager</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> lastNumber = <span class="number">0</span>; <span class="comment">//上一个号码</span></span><br><span class="line">	<span class="keyword">private</span> List queueNumbers = <span class="keyword">new</span> ArrayList(); <span class="comment">//等待的号码</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> Integer <span class="title">generateNewNumber</span><span class="params">()</span></span>&#123;</span><br><span class="line">		queueNumbers.add(++lastNumber);</span><br><span class="line">		<span class="keyword">return</span> lastNumber;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> Integer <span class="title">fetchNumber</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//如果有，就取走</span></span><br><span class="line">		<span class="keyword">if</span>(queueNumbers.size()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">			<span class="keyword">return</span> (Integer)queueNumbers.remove(<span class="number">0</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="NumberMachine类">NumberMachine类</h3><ul>
+<li>定义三个成员变量分别指向三个NumberManager对象，分别表示普通、快速和VIP客户的号码管理器，定义三个对应的方法来返回这三个NumberManager对象。</li>
+<li>将NumberMachine类设计成单例</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xinjue.BankQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NumberMachine</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">NumberMachine</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	<span class="comment">//单例</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> NumberMachine instance = <span class="keyword">new</span> NumberMachine();</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> NumberMachine <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//对应三种客户，实例化三个NumberManager</span></span><br><span class="line">	<span class="keyword">private</span> NumberManager commonManager = <span class="keyword">new</span> NumberManager();</span><br><span class="line">	<span class="keyword">private</span> NumberManager expressManager = <span class="keyword">new</span> NumberManager();</span><br><span class="line">	<span class="keyword">private</span> NumberManager vipManager = <span class="keyword">new</span> NumberManager();</span><br><span class="line">	<span class="function"><span class="keyword">public</span> NumberManager <span class="title">getCommonManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> commonManager;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> NumberManager <span class="title">getExpressManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> expressManager;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> NumberManager <span class="title">getVipManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> vipManager;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="CustomerType枚举类">CustomerType枚举类</h3><ul>
+<li>系统中有三种类型的客户，所以用定义一个枚举类，其中定义三个成员分别表示三种类型的客户。</li>
+<li>重写toString方法，返回类型的中文名称。这是在后面编码时重构出来的，刚开始不用考虑。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xinjue.BankQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> CustomerType &#123;</span><br><span class="line">	COMMON,EXPRESS,VIP;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>&#123;</span><br><span class="line">		String name = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">switch</span>(<span class="keyword">this</span>)&#123;</span><br><span class="line">		<span class="keyword">case</span> COMMON:</span><br><span class="line">			name = <span class="string">"普通"</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> EXPRESS:</span><br><span class="line">			name = <span class="string">"快速"</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> VIP:</span><br><span class="line">			name = name();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Constants类">Constants类</h3><p>定义三个常量：MAX_SERVICE_TIME、MIN_SERVICE_TIME、COMMON_CUSTOMER_INTERVAL_TIME</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xinjue.BankQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Constants</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> MAX_SERVICE_TIME = <span class="number">10000</span>; <span class="comment">//10秒！</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> MIN_SERVICE_TIME = <span class="number">1000</span>; <span class="comment">//1秒！</span></span><br><span class="line">	<span class="comment">/*每个普通窗口服务一个客户的平均时间为5秒，一共有4个这样的窗口，也就是说银行的所有普通窗口合起来</span><br><span class="line">	 * 平均1.25秒内可以服务完一个普通客户，再加上快速窗口和VIP窗口也可以服务普通客户，所以，</span><br><span class="line">	 * 1秒钟产生一个普通客户比较合理，*/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> COMMON_CUSTOMER_INTERVAL_TIME = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ServiceWindow类">ServiceWindow类</h3><ul>
+<li>定义一个start方法，内部启动一个线程，根据服务窗口的类别分别循环调用三个不同的方法。</li>
+<li>定义三个方法分别对三种客户进行服务，为了观察运行效果，应详细打印出其中的细节信息。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xinjue.bankqueque;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceWindow</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> CustomerType type = CustomerType.COMMON;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> number = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> CustomerType <span class="title">getType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> type;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setType</span><span class="params">(CustomerType type)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.type = type;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNumber</span><span class="params">(<span class="keyword">int</span> number)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.number = number;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>&#123;</span><br><span class="line">		Executors.newSingleThreadExecutor().execute(</span><br><span class="line">				<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">					<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">						<span class="comment">//下面这种写法的运行效率低，最好是把while放在case下面</span></span><br><span class="line">						<span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">							<span class="keyword">switch</span>(type)&#123;</span><br><span class="line">								<span class="keyword">case</span> COMMON:</span><br><span class="line">									commonService();</span><br><span class="line">									<span class="keyword">break</span>;</span><br><span class="line">								<span class="keyword">case</span> EXPRESS:</span><br><span class="line">									expressService();</span><br><span class="line">									<span class="keyword">break</span>;</span><br><span class="line">								<span class="keyword">case</span> VIP:</span><br><span class="line">									vipService();</span><br><span class="line">									<span class="keyword">break</span>;</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">		);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">commonService</span><span class="params">()</span></span>&#123;</span><br><span class="line">		String windowName = <span class="string">"第"</span> + number + <span class="string">"号"</span> + type + <span class="string">"窗口"</span>;</span><br><span class="line">		System.out.println(windowName + <span class="string">"开始获取普通任务!"</span>);</span><br><span class="line">		Integer serviceNumber = NumberMachine.getInstance().getCommonManager().fetchNumber();</span><br><span class="line">		<span class="keyword">if</span>(serviceNumber != <span class="keyword">null</span> )&#123;</span><br><span class="line">			System.out.println(windowName + <span class="string">"开始为第"</span> + serviceNumber + <span class="string">"号普通客户服务"</span>);</span><br><span class="line">			<span class="keyword">int</span> maxRandom = Constants.MAX_SERVICE_TIME - Constants.MIN_SERVICE_TIME;</span><br><span class="line">			<span class="keyword">int</span> serviceTime = <span class="keyword">new</span> Random().nextInt(maxRandom)+<span class="number">1</span> + Constants.MIN_SERVICE_TIME;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Thread.sleep(serviceTime);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(windowName + <span class="string">"完成为第"</span> + serviceNumber + <span class="string">"号普通客户服务，总共耗时"</span> + serviceTime/<span class="number">1000</span> + <span class="string">"秒"</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			System.out.println(windowName + <span class="string">"没有取到普通任务，正在空闲一秒"</span>);</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">expressService</span><span class="params">()</span></span>&#123;</span><br><span class="line">		Integer serviceNumber = NumberMachine.getInstance().getExpressManager().fetchNumber();</span><br><span class="line">		String windowName = <span class="string">"第"</span> + number + <span class="string">"号"</span> + type + <span class="string">"窗口"</span>;</span><br><span class="line">		System.out.println(windowName + <span class="string">"开始获取快速任务!"</span>);</span><br><span class="line">		<span class="keyword">if</span>(serviceNumber !=<span class="keyword">null</span>)&#123;</span><br><span class="line">			System.out.println(windowName + <span class="string">"开始为第"</span> + serviceNumber + <span class="string">"号快速客户服务"</span>);</span><br><span class="line">			<span class="keyword">int</span> serviceTime = Constants.MIN_SERVICE_TIME;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Thread.sleep(serviceTime);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(windowName + <span class="string">"完成为第"</span> + serviceNumber + <span class="string">"号快速客户服务，总共耗时"</span> + serviceTime/<span class="number">1000</span> + <span class="string">"秒"</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			System.out.println(windowName + <span class="string">"没有取到快速任务！"</span>);</span><br><span class="line">			commonService();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">vipService</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">		Integer serviceNumber = NumberMachine.getInstance().getVipManager().fetchNumber();</span><br><span class="line">		String windowName = <span class="string">"第"</span> + number + <span class="string">"号"</span> + type + <span class="string">"窗口"</span>;</span><br><span class="line">		System.out.println(windowName + <span class="string">"开始获取VIP任务!"</span>);</span><br><span class="line">		<span class="keyword">if</span>(serviceNumber !=<span class="keyword">null</span>)&#123;</span><br><span class="line">			System.out.println(windowName + <span class="string">"开始为第"</span> + serviceNumber + <span class="string">"号VIP客户服务"</span>);</span><br><span class="line">			<span class="keyword">int</span> maxRandom = Constants.MAX_SERVICE_TIME - Constants.MIN_SERVICE_TIME;</span><br><span class="line">			<span class="keyword">int</span> serviceTime = <span class="keyword">new</span> Random().nextInt(maxRandom)+<span class="number">1</span> + Constants.MIN_SERVICE_TIME;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Thread.sleep(serviceTime);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(windowName + <span class="string">"完成为第"</span> + serviceNumber + <span class="string">"号VIP客户服务，总共耗时"</span> + serviceTime/<span class="number">1000</span> + <span class="string">"秒"</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			System.out.println(windowName + <span class="string">"没有取到VIP任务！"</span>);</span><br><span class="line">			commonService();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="MainClass类">MainClass类</h3><ul>
+<li>用for循环创建出4个普通窗口，再创建出1个快速窗口和一个VIP窗口。</li>
+<li>接着再创建三个定时器，分别定时去创建新的普通客户号码、新的快速客户号码、新的VIP客户号码。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xinjue.bankqueque;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainClass</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//产生4个普通窗口</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">			ServiceWindow window =  <span class="keyword">new</span> ServiceWindow();</span><br><span class="line">			window.setNumber(i);</span><br><span class="line">			window.start();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//产生1个快速窗口</span></span><br><span class="line">		ServiceWindow expressWindow =  <span class="keyword">new</span> ServiceWindow();</span><br><span class="line">		expressWindow.setType(CustomerType.EXPRESS);</span><br><span class="line">		expressWindow.start();</span><br><span class="line"></span><br><span class="line">		<span class="comment">//产生1个VIP窗口</span></span><br><span class="line">		ServiceWindow vipWindow =  <span class="keyword">new</span> ServiceWindow();</span><br><span class="line">		vipWindow.setType(CustomerType.VIP);</span><br><span class="line">		vipWindow.start();</span><br><span class="line"></span><br><span class="line">		<span class="comment">//普通客户拿号</span></span><br><span class="line">		Executors.newScheduledThreadPool(<span class="number">1</span>).scheduleAtFixedRate(</span><br><span class="line">				<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">					<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">						Integer serviceNumber = NumberMachine.getInstance().getCommonManager().generateNewNumber();</span><br><span class="line">						<span class="javadoc">/**</span><br><span class="line">						 * 采用logger方式，无法看到直观的运行效果，因为logger.log方法内部并不是直接把内容打印出出来，</span><br><span class="line">						 * 而是交给内部的一个线程去处理，所以，打印出来的结果在时间顺序上看起来很混乱。</span><br><span class="line">						 */</span></span><br><span class="line">						<span class="comment">//logger.info("第" + serviceNumber + "号普通客户正在等待服务！");</span></span><br><span class="line">						System.out.println(<span class="string">"第"</span> + serviceNumber + <span class="string">"号普通客户正在等待服务！"</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;,</span><br><span class="line">				<span class="number">0</span>,</span><br><span class="line">				Constants.COMMON_CUSTOMER_INTERVAL_TIME,</span><br><span class="line">				TimeUnit.SECONDS);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//快速客户拿号</span></span><br><span class="line">		Executors.newScheduledThreadPool(<span class="number">1</span>).scheduleAtFixedRate(</span><br><span class="line">				<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">					<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">						Integer serviceNumber = NumberMachine.getInstance().getExpressManager().generateNewNumber();</span><br><span class="line">						System.out.println(<span class="string">"第"</span> + serviceNumber + <span class="string">"号快速客户正在等待服务！"</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;,</span><br><span class="line">				<span class="number">0</span>,</span><br><span class="line">				Constants.COMMON_CUSTOMER_INTERVAL_TIME * <span class="number">2</span>,</span><br><span class="line">				TimeUnit.SECONDS);</span><br><span class="line">		<span class="comment">//VIP客户拿号</span></span><br><span class="line">		Executors.newScheduledThreadPool(<span class="number">1</span>).scheduleAtFixedRate(</span><br><span class="line">				<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">					<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">						Integer serviceNumber = NumberMachine.getInstance().getVipManager().generateNewNumber();</span><br><span class="line">						System.out.println(<span class="string">"第"</span> + serviceNumber + <span class="string">"号VIP客户正在等待服务！"</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;,</span><br><span class="line">				<span class="number">0</span>,</span><br><span class="line">				Constants.COMMON_CUSTOMER_INTERVAL_TIME * <span class="number">6</span>,</span><br><span class="line">				TimeUnit.SECONDS);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="http://xinjue.qiniudn.com/github%2F201409%2Fbankresalt.jpg" alt="最终效果图"></p>
+
+          
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/银行排队/">
+                #银行排队
+              </a>
+            
+              <a href="/tags/面试题/">
+                #面试题
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+
+          </div>
+
+          
+            <div class="pagination">
+              <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+            </div>
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="Yantong Wang" />
+        <p class="site-author-name">Yantong Wang</p>
+      </div>
+      <p class="site-description motion-element"></p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <a href="/archives">
+            <span class="site-state-item-count">26</span>
+            <span class="site-state-item-name">文章</span>
+          </a>
+        </div>
+
+        <div class="site-state-item site-state-categories">
+          
+            <span class="site-state-item-count">3</span>
+            <span class="site-state-item-name">分類</span>
+          
+        </div>
+
+        <div class="site-state-item site-state-tags">
+          <a href="/tags">
+            <span class="site-state-item-count">38</span>
+            <span class="site-state-item-name">標籤</span>
+          </a>
+        </div>
+
+      </div>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+      </div>
+
+      
+      
+
+    </div>
+
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yantong Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>

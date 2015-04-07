@@ -1,0 +1,1082 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-next">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.1"/>
+
+
+
+
+	<meta name="keywords" content="多线程," />
+
+  <title> 多线程 // 觉知此事要躬行 </title>
+</head>
+
+<body>
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">觉知此事要躬行</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首頁
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          歸檔
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          標籤
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              多线程
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          
+            發表於 2014-07-02
+          
+        </span>
+
+        
+          
+        
+
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>多线程<br>在java中要实现多线程操作有两种手段，一种是继承Thread类，一种是实现Runnable接口，两种手段都需要调用start()方法来启动线程。</p>
+<h3 id="1．_继承Thread类实现多线程：">1． 继承Thread类实现多线程：</h3><pre class="brush:[java]">class 类名 extends Thread{    //继承Thread类
+    属性... ;                //类中定义的属性
+    方法... ;                //类中定义的方法
+    public void run(){        //覆写Thread类中的run()方法
+    线程主体;
+}
+}</pre>
+<a id="more"></a>
+下面看一个具体的例子：
+<pre class="brush:[java]">
+    class MyThread extends Thread{    //继承Thread类
+    private String name;                //类中定义的属性
+    public MyThread(String name){
+    this.name = name;
+}
+public void run(){        //覆写Thread类中的run()方法
+for(int i =0; i&lt;10; i++){
+System.out.println(this.name+"线程运行，i = "+i);
+}
+}
+}
+public class Demo{
+public static void main(String[] args) {
+MyThread mt1 = new MyThread("线程1");      //实例化对象
+MyThread mt2 = new MyThread("线程2");
+//启动多线程
+mt1.start();
+mt2.start();
+}
+}</pre>
+
+<h3 id="2-_实现Runnable接口：">2. 实现Runnable接口：</h3><pre class="brush:[java]">class 类名 implements Runnable{    //继承Thread类
+    属性... ;                //类中定义的属性
+    方法... ;                //类中定义的方法
+    public void run(){        //覆写Thread类中的run()方法
+    线程主体;
+}
+}</pre>
+
+<p>下面看一个具体的例子：</p>
+<pre class="brush:[java]">
+    class MyThread implements Runnable{    //实现Runnable接口
+    private String name;                //类中定义的属性
+    public MyThread(String name){
+    this.name = name;
+}
+public void run(){        //覆写接口中的run()方法
+for(int i =0; i&lt;10; i++){
+System.out.println(this.name+"线程运行，i = "+i);
+}
+}
+}
+public class Demo{
+public static void main(String[] args) {
+MyThread mt1 = new MyThread("线程1");      //实例化Runnable对象
+MyThread mt2 = new MyThread("线程2");
+//实例化Thread类对象
+Thread t1 = new Thread(mt1);
+Thread t2 = new Thread(mt2);
+//启动多线程
+t1.start();
+t2.start();
+}
+}</pre>
+
+<p>Runnable接口中没有start方法，可以通过Thread类的构造方法Thread(Runnable target)等来实例化对象，进而启动多线程。</p>
+<h3 id="进一步分析">进一步分析</h3><p>通过查看Thread类的定义：</p>
+<blockquote>
+<p>public class Thread extends Object implements Runnable  </p>
+</blockquote>
+<p>可知Thread类实现了Runnable接口，但是通过观察内部源码，可知到Thread类并没有完全实现Runnable接口中的run方法  </p>
+<h3 id="Thread类中的常用方法">Thread类中的常用方法</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">方法</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">public Thread(Runnable target)</td>
+<td style="text-align:center">构造</td>
+<td style="text-align:left">接收Runnable接口子类对象，实例化Thread对象</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">public Thread(Runnable target, String name)</td>
+<td style="text-align:center">构造</td>
+<td style="text-align:left">接收Runnable接口子类对象，实例化Thread对象,并设置名称</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">public Thread(String name)</td>
+<td style="text-align:center">构造</td>
+<td style="text-align:left">实例化Thread对象，并设置名称</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">public static Thread currentThread()</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">返回正在执行的线程</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left">public final String getName()</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">返回线程名称</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left">public final int getPriority()</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">返回线程优先级</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left">public Boolean isInterrupted()</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">判断目前线程是否被中断，如果是，返回true，否则返回false</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left">public final Boolean isAlive()</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">判断线程是否在活动，如果是，返回ture，否则返回false</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left">public final void join() throws Interrupted Exception</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">等待该线程死亡</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left">public void run()</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">执行线程</td>
+</tr>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:left">public final void setName(String name)</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">设定线程名称</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left">public final setPriority(int newPriority)</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">设定线程的优先级</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left">public static void sleep(long millis) throws InterruptedException</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">使目前线程休眠millis毫秒</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:left">public void start()</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">开始执行线程</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:left">public static void yield()</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">将目前线程暂停，允许其它线程执行</td>
+</tr>
+<tr>
+<td style="text-align:left">16</td>
+<td style="text-align:left">public final void setDaemon(Boolean on)</td>
+<td style="text-align:center">普通</td>
+<td style="text-align:left">将一个线程设置成后台运行</td>
+</tr>
+</tbody>
+</table>
+<p>上面表格中的方法是Thread类中的常用方法，通过看解释也很容易理解他们。就不一一列举用法案例了。</p>
+<p>重点是这个<strong>同步代码块及同步方法</strong></p>
+<h3 id="同步与锁死">同步与锁死</h3><blockquote>
+<p>问题引出：<br>一个多线程的程序如果是通过Runnable接口实现的，则意味着类中的属性将被多个线程共享，那么这样一来就会造成一个问题，如果这多个线程要操作同一个资源时就有可能出现资源的同步问题。书中和视频中都讲到的买票的例子中就有可能出现票为负数的情况。</p>
+</blockquote>
+<p>解决这种问题，可以使用同步，分为同步代码块和同步方法.</p>
+<p><strong>1. 同步代码块</strong></p>
+<blockquote>
+<p>synchronized(同步对象){<br>      需要同步的代码;<br>  }</p>
+</blockquote>
+<p>下面看代码示例：</p>
+<pre class="brush:[java]">class MyThread implements Runnable{ //实现Runnable接口
+    private int ticket = 5;                        //一共5张票
+    public void run(){                                //覆写run()方法
+    for (int i=0; i<100; i++)="" {="" synchronized="" (this){="" 设置需要同步的操作="" if="" (ticket="">0) {                            //判断是否有余票
+    try{
+    Thread.sleep(300);                //加入延迟
+}catch(InterruptedException e){
+e.printStackTrace();
+}
+System.out.println("卖票：ticket = "+ticket--);
+}
+}
+}
+}
+}
+public class Demo{
+public static void main(String[] args) {
+MyThread mt = new MyThread();
+Thread t1 = new Thread(mt);
+Thread t2 = new Thread(mt);
+Thread t3 = new Thread(mt);
+t1.start();
+t2.start();
+t3.start();
+}
+}</100;></pre>
+
+<p>运行结果如下：</p>
+<blockquote>
+<p>卖票：ticket = 5<br>卖票：ticket = 4<br>卖票：ticket = 3<br>卖票：ticket = 2<br>卖票：ticket = 1</p>
+</blockquote>
+<p>问题解决</p>
+<p><strong>2. 同步方法</strong></p>
+<blockquote>
+<p>synchronized 方法返回值 方法名称(参数列表{})</p>
+</blockquote>
+<p>不多说，上代码，同样的案例的另一种解决方式：</p>
+<pre class="brush:[java]">
+    class MyThread implements Runnable{ //实现Runnable接口
+    private int ticket = 5;                        //一共5张票
+    public void run(){                                //覆写run()方法
+    for (int i=0; i&lt;100; i++) {
+    this.sale();                                    //调用同步方法
+}
+}
+public synchronized void sale(){        //声明同步方法
+if(ticket>0){
+try{
+Thread.sleep(300);                //加入延迟
+}catch(InterruptedException e){
+e.printStackTrace();
+}
+System.out.println("卖票：ticket = "+ticket--);
+}
+}
+}
+public class Demo{
+public static void main(String[] args) {
+MyThread mt = new MyThread();
+Thread t1 = new Thread(mt);
+Thread t2 = new Thread(mt);
+Thread t3 = new Thread(mt);
+t1.start();
+t2.start();
+t3.start();
+}
+}
+</pre>
+
+<p>运行结果如下：</p>
+<blockquote>
+<p>卖票：ticket = 5<br>卖票：ticket = 4<br>卖票：ticket = 3<br>卖票：ticket = 2<br>卖票：ticket = 1</p>
+</blockquote>
+<p>问题解决</p>
+
+        
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/多线程/">
+                #多线程
+              </a>
+            
+          </div>
+        
+
+        
+          <div class="post-nav">
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2014/07/09/多线程单俐设计模式/">多线程单俐设计模式</a>
+              
+            </div>
+
+            <div class="post-nav-next post-nav-item">
+              
+            </div>
+          </div>
+        
+
+        
+        
+      </div>
+    
+  </div>
+
+
+
+  
+    <div class="comments" id="comments">
+      
+    </div>
+  
+
+          </div>
+
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview">
+          本站概覽
+        </li>
+      </ul>
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="/images/default_avatar.jpg" alt="Yantong Wang" />
+        <p class="site-author-name">Yantong Wang</p>
+      </div>
+      <p class="site-description motion-element"></p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <a href="/archives">
+            <span class="site-state-item-count">26</span>
+            <span class="site-state-item-name">文章</span>
+          </a>
+        </div>
+
+        <div class="site-state-item site-state-categories">
+          
+            <span class="site-state-item-count">3</span>
+            <span class="site-state-item-name">分類</span>
+          
+        </div>
+
+        <div class="site-state-item site-state-tags">
+          <a href="/tags">
+            <span class="site-state-item-count">38</span>
+            <span class="site-state-item-name">標籤</span>
+          </a>
+        </div>
+
+      </div>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+      </div>
+
+      
+      
+
+    </div>
+
+    
+      <div class="post-toc-wrap sidebar-panel-active">
+        <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <div class="post-toc">
+          
+          
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1．_继承Thread类实现多线程："><span class="nav-number">1.</span> <span class="nav-text">1． 继承Thread类实现多线程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-_实现Runnable接口："><span class="nav-number">2.</span> <span class="nav-text">2. 实现Runnable接口：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进一步分析"><span class="nav-number">3.</span> <span class="nav-text">进一步分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread类中的常用方法"><span class="nav-number">4.</span> <span class="nav-text">Thread类中的常用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步与锁死"><span class="nav-number">5.</span> <span class="nav-text">同步与锁死</span></a></li></ol></div>
+          
+        </div>
+        <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+      </div>
+    
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Yantong Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0 && isDesktop()) {
+        setTimeout(function () {
+          $('.sidebar-toggle').trigger('click');
+        }, 800);
+      }
+    });
+  </script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>
